@@ -4,7 +4,7 @@ package dhbw.weichselbaum.graph;
 
 import dhbw.weichselbaum.graph.edge.Edge;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Interface for a graph
@@ -12,6 +12,8 @@ import java.util.List;
  * @param <E> Type of edge marking
  */
 public interface Graph<N extends Comparable<N>, E> {
+
+	 int DEFAULT_COMPARE_TO_EQUALITY_VALUE = 0;
 
 	/**
 	 * Method that adds a new node into the graph
@@ -54,11 +56,18 @@ public interface Graph<N extends Comparable<N>, E> {
 	 * Method that returns the nodes of the graph as a list
 	 * @return nodes in a list
 	 */
-	List<N> nodes();
+	Set<N> nodes();
 
 	/**
 	 * Method that returns the edges of the graph as a list
 	 * @return edges in a list
 	 */
-	List<Edge<N, E>> edges();
+	Set<Edge<N, E>> edges();
+
+	/**
+	 * Method that finds an equal node in the graph. Build on the compare to mechanism from Comparable<T>
+	 * @param node node for comparison
+	 * @return equal node in graph (reference)
+	 */
+	N findEqualNode(N node);
 }
