@@ -1,8 +1,8 @@
 
-package dhbw.weichselbaum.graph;
+package dhbw.graphmetrics.graph;
 
 
-import dhbw.weichselbaum.graph.edge.Edge;
+import dhbw.graphmetrics.graph.edge.Edge;
 
 import java.util.Set;
 
@@ -50,7 +50,15 @@ public interface Graph<N extends Comparable<N>, E> {
 	* @param node searched for node
 	* @return true, if node is in graph else false
 	*/
-	boolean contains(N node);
+	boolean containsNode(N node);
+
+	/**
+	 * Method that checks if certain edge is in graph
+	 * @param from from node
+	 * @param to to node
+	 * @return true, if edge is in graph else false
+	 */
+	boolean containsEdge(N from, N to);
 
 	/**
 	 * Method that returns the nodes of the graph as a list

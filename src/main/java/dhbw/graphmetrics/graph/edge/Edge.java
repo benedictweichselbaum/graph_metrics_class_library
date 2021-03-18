@@ -1,5 +1,5 @@
 
-package dhbw.weichselbaum.graph.edge;
+package dhbw.graphmetrics.graph.edge;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
