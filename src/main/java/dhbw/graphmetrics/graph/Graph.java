@@ -1,4 +1,3 @@
-
 package dhbw.graphmetrics.graph;
 
 
@@ -73,9 +72,21 @@ public interface Graph<N extends Comparable<N>, E> {
 	Set<Edge<N, E>> edges();
 
 	/**
+	 * Method that returns all adjacent nodes of a certain node
+	 * @param node node for which adjacent nodes should be found
+	 * @return
+	 */
+	Set<N> adjacentNodes(N node);
+
+	/**
 	 * Method that finds an equal node in the graph. Build on the compare to mechanism from Comparable<T>
 	 * @param node node for comparison
 	 * @return equal node in graph (reference)
 	 */
 	N findEqualNode(N node);
+
+	/**
+	 * Method that prints out the graph
+	 */
+	void printOutGraph();
 }

@@ -1,7 +1,7 @@
-
 package dhbw.graphmetrics.graph;
 
 import dhbw.graphmetrics.graph.edge.Edge;
+import dhbw.graphmetrics.graph.exceptions.GraphAnalyticException;
 import dhbw.graphmetrics.graph.exceptions.GraphManipulationException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -23,6 +24,7 @@ public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> impl
 	private static final String ADD_NODE_EXCEPTION_MESSAGE = "Node already exists";
 	private static final String DELETE_NODE_EXCEPTION_MESSAGE = "Node does not exist";
 	private static final String DELETE_EDGE_EXCEPTION_MESSAGE = "Deletion of edge not possible";
+	private static final String FIND_ADJACENT_NODES_EXCEPTION_MESSAGE = "Node does not exist";
 
 	private Map<N, List<Edge<N, E>>> nodeNeighbourMap = new HashMap<>();
 
@@ -116,6 +118,15 @@ public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> impl
 	}
 
 	@Override
+	public Set<N> adjacentNodes(N node) {
+		if (this.containsNode(node)) {
+			return this.nodeNeighbourMap.get(this.findEqualNode(node)).stream().map(Edge::getToNode).collect(Collectors.toSet());
+		} else {
+			throw new GraphAnalyticException(FIND_ADJACENT_NODES_EXCEPTION_MESSAGE);
+		}
+	}
+
+	@Override
 	public N findEqualNode(N node) {
 		if (this.nodeNeighbourMap.containsKey(node)) {
 			return node;
@@ -131,5 +142,16 @@ public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> impl
 
 	private void deleteEdgeFromAdjacencyList(List<Edge<N, E>> adjacencyList, N to) {
 		adjacencyList.removeIf(edge -> edge.getToNode().compareTo(to) == DEFAULT_COMPARE_TO_EQUALITY_VALUE);
+	}
+
+	public void printOutGraph() {
+		StringBuilder stringBuilder = new StringBuilder();
+		this.nodeNeighbourMap.forEach((n, e) -> {
+			stringBuilder.append(n).append(": ");
+			e.forEach(edge -> stringBuilder.append(edge.getToNode()).append(";"));
+			stringBuilder.append("\n");
+		});
+		stringBuilder.append("---------------------------------------");
+		System.out.println(stringBuilder.toString());
 	}
 }
