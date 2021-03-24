@@ -74,7 +74,7 @@ public interface Graph<N extends Comparable<N>, E> {
 	/**
 	 * Method that returns all adjacent nodes of a certain node
 	 * @param node node for which adjacent nodes should be found
-	 * @return
+	 * @return set of adjacent nodes
 	 */
 	Set<N> adjacentNodes(N node);
 

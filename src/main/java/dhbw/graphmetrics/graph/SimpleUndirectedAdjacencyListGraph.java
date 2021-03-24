@@ -89,9 +89,13 @@ public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> impl
 
 	@Override
 	public boolean containsNode(N node) {
-		return this.nodeNeighbourMap.containsKey(node) ||
-				this.nodeNeighbourMap.keySet().stream()
-						.anyMatch(compareNode -> compareNode.compareTo(node) == DEFAULT_COMPARE_TO_EQUALITY_VALUE);
+		if (node == null) {
+			return false;
+		} else {
+			return this.nodeNeighbourMap.containsKey(node) ||
+					this.nodeNeighbourMap.keySet().stream()
+							.anyMatch(compareNode -> compareNode.compareTo(node) == DEFAULT_COMPARE_TO_EQUALITY_VALUE);
+		}
 	}
 
 	@Override

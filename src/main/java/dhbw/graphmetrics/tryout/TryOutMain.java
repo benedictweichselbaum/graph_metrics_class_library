@@ -2,6 +2,9 @@ package dhbw.graphmetrics.tryout;
 
 import dhbw.graphmetrics.graph.Graph;
 import dhbw.graphmetrics.graph.SimpleUndirectedAdjacencyListGraph;
+import dhbw.graphmetrics.metrics.GraphMetric;
+import dhbw.graphmetrics.metrics.NodeMetric;
+import dhbw.graphmetrics.metrics.boundary.MetricsCalculation;
 
 public class TryOutMain {
     public static void main(String[] args) {
@@ -19,7 +22,12 @@ public class TryOutMain {
         graph.printOutGraph();
         graph.deleteEdge("München", "Nürnberg");
         graph.printOutGraph();
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.ORDER));
         graph.deleteNode("Nürnberg");
         graph.printOutGraph();
+        System.out.println();
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.ORDER));
+        System.out.println(MetricsCalculation.calculateNodeMetric(graph, "Hamburg", NodeMetric.DEGREE));
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.SIZE));
     }
 }
