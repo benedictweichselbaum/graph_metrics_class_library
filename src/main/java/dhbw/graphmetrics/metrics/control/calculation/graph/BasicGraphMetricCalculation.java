@@ -1,24 +1,60 @@
 
 package dhbw.graphmetrics.metrics.control.calculation.graph;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
-
 import dhbw.graphmetrics.graph.Graph;
+import dhbw.graphmetrics.metrics.control.calculation.node.BasicNodeMetricCalculation;
+import dhbw.graphmetrics.metrics.control.exceptions.MetricCalculationException;
+import dhbw.graphmetrics.metrics.control.helper.SearchAlgorithms;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
+import java.util.Stack;
+import java.util.stream.Collectors;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BasicGraphMetricCalculation {
+
+	private static final String METRIC_CALCULATION_EXCEPTION_MESSAGE = "Metric calculation failed";
 
 	public static <N extends Comparable<N>, E> Integer order(Graph<N, E> graph) {
 		return graph.nodes().size();
 	}
+
 	public static <N extends Comparable<N>, E> Integer size(Graph<N, E> graph) {
 		return graph.edges().size();
+	}
+
+	public static <N extends Comparable<N>, E> Integer maxDegree(Graph<N, E> graph) {
+		return graph.nodes().stream().mapToInt(node ->
+				BasicNodeMetricCalculation.degree(graph, node)).max()
+				.orElseThrow(() -> new MetricCalculationException(METRIC_CALCULATION_EXCEPTION_MESSAGE));
+	}
+
+	public static <N extends Comparable<N>, E> Integer minDegree(Graph<N, E> graph) {
+		return graph.nodes().stream().mapToInt(node ->
+				BasicNodeMetricCalculation.degree(graph, node)).min()
+				.orElseThrow(() -> new MetricCalculationException(METRIC_CALCULATION_EXCEPTION_MESSAGE));
+	}
+
+	public static <N extends Comparable<N>, E> Double avgDegree(Graph<N, E> graph) {
+		return graph.nodes().stream().mapToInt(node ->
+				BasicNodeMetricCalculation.degree(graph, node)).average()
+				.orElseThrow(() -> new MetricCalculationException(METRIC_CALCULATION_EXCEPTION_MESSAGE));
+	}
+
+	public static <N extends Comparable<N>, E> Integer numberOfComponents(Graph<N, E> graph) {
+		Integer numberOfComponents = 0;
+		List<N> visitedNodes = new ArrayList<>();
+		for (N node : graph.nodes()) {
+			if (!visitedNodes.contains(node)) {
+				SearchAlgorithms.depthFirstSearch(graph, node, visitedNodes);
+				numberOfComponents++;
+			}
+		}
+		return numberOfComponents;
 	}
 }

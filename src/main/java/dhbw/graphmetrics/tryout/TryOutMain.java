@@ -14,20 +14,19 @@ public class TryOutMain {
         graph.addNode("Hamburg");
         graph.addNode("Berlin");
         graph.addNode("Köln");
+        graph.addNode("Stade");
+        graph.addNode("Stuttgart");
+        graph.addNode("Hannover");
+        graph.addNode("Teststadt");
         graph.addEdge("München", "Nürnberg", "200 km");
         graph.addEdge("Nürnberg", "Berlin", "500 km");
         graph.addEdge("Berlin", "Hamburg", "300 km");
         graph.addEdge("Hamburg", "München", "700 km");
         graph.addEdge("Köln", "Nürnberg", "400 km");
+        graph.addEdge("Stade", "Stuttgart", "");
+        graph.addEdge("Hannover", "Teststadt", "");
         graph.printOutGraph();
-        graph.deleteEdge("München", "Nürnberg");
-        graph.printOutGraph();
-        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.ORDER));
-        graph.deleteNode("Nürnberg");
-        graph.printOutGraph();
-        System.out.println();
-        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.ORDER));
-        System.out.println(MetricsCalculation.calculateNodeMetric(graph, "Hamburg", NodeMetric.DEGREE));
-        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.SIZE));
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.NUMBER_OF_CONNECTED_COMPONENTS));
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.AVG_DEGREE));
     }
 }

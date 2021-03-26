@@ -1,20 +1,13 @@
 
 package dhbw.graphmetrics.metrics.boundary;
 
-import dhbw.graphmetrics.metrics.control.distributor.GraphMetricCalculationDistribution;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
-
 import dhbw.graphmetrics.graph.Graph;
 import dhbw.graphmetrics.metrics.GraphMetric;
 import dhbw.graphmetrics.metrics.NodeMetric;
+import dhbw.graphmetrics.metrics.control.distributor.GraphMetricCalculationDistribution;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class MetricsCalculation {
 
