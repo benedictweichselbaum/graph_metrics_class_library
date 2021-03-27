@@ -3,6 +3,7 @@ package dhbw.graphmetrics.graph;
 
 import dhbw.graphmetrics.graph.edge.Edge;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -70,6 +71,13 @@ public interface Graph<N extends Comparable<N>, E> {
 	 * @return edges in a list
 	 */
 	Set<Edge<N, E>> edges();
+
+	/**
+	 * Method that returns edges from a certain node
+	 * @param node node
+	 * @return set of edges
+	 */
+	List<Edge<N, E>> edgesFromNode(N node);
 
 	/**
 	 * Method that returns all adjacent nodes of a certain node

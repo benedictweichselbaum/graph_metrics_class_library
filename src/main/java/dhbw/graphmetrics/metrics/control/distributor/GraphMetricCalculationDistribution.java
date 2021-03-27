@@ -4,7 +4,9 @@ import dhbw.graphmetrics.graph.Graph;
 import dhbw.graphmetrics.metrics.GraphMetric;
 import dhbw.graphmetrics.metrics.NodeMetric;
 import dhbw.graphmetrics.metrics.control.calculation.graph.BasicGraphMetricCalculation;
+import dhbw.graphmetrics.metrics.control.calculation.graph.DistanceGraphMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.node.BasicNodeMetricCalculation;
+import dhbw.graphmetrics.metrics.control.calculation.node.DistanceNodeMetricCalculation;
 import dhbw.graphmetrics.metrics.control.exceptions.MetricChoiceException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,10 @@ public final class GraphMetricCalculationDistribution {
 				return BasicGraphMetricCalculation.avgDegree(graph);
 			case NUMBER_OF_CONNECTED_COMPONENTS:
 				return BasicGraphMetricCalculation.numberOfComponents(graph);
+			case RADIUS:
+				return DistanceGraphMetricCalculation.radius(graph);
+			case DIAMETER:
+				return DistanceGraphMetricCalculation.diameter(graph);
 			default:
 				throw new MetricChoiceException(NOT_IMPLEMENTED_CHOICE_MESSAGE);
 		}
@@ -41,6 +47,8 @@ public final class GraphMetricCalculationDistribution {
 				return BasicNodeMetricCalculation.inDegree(graph, node);
 			case OUT_DEGREE:
 				return BasicNodeMetricCalculation.outDegree(graph, node);
+			case ECCENTRICITY:
+				return DistanceNodeMetricCalculation.eccentricity(graph, node);
 			default:
 				throw new MetricChoiceException(NOT_IMPLEMENTED_CHOICE_MESSAGE);
 		}

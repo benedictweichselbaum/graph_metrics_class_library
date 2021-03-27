@@ -122,6 +122,11 @@ public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> impl
 	}
 
 	@Override
+	public List<Edge<N, E>> edgesFromNode(N node) {
+		return this.nodeNeighbourMap.get(this.findEqualNode(node));
+	}
+
+	@Override
 	public Set<N> adjacentNodes(N node) {
 		if (this.containsNode(node)) {
 			return this.nodeNeighbourMap.get(this.findEqualNode(node)).stream().map(Edge::getToNode).collect(Collectors.toSet());
