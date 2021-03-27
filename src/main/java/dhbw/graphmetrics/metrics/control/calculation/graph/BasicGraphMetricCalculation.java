@@ -8,12 +8,8 @@ import dhbw.graphmetrics.metrics.control.helper.SearchAlgorithms;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
-import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BasicGraphMetricCalculation {

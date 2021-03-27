@@ -4,6 +4,7 @@ import dhbw.graphmetrics.graph.Graph;
 import dhbw.graphmetrics.metrics.GraphMetric;
 import dhbw.graphmetrics.metrics.NodeMetric;
 import dhbw.graphmetrics.metrics.control.calculation.graph.BasicGraphMetricCalculation;
+import dhbw.graphmetrics.metrics.control.calculation.graph.ChromaticMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.graph.DistanceGraphMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.node.BasicNodeMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.node.DistanceNodeMetricCalculation;
@@ -34,6 +35,12 @@ public final class GraphMetricCalculationDistribution {
 				return DistanceGraphMetricCalculation.radius(graph);
 			case DIAMETER:
 				return DistanceGraphMetricCalculation.diameter(graph);
+			case  CHROMATIC_NUMBER:
+				return ChromaticMetricCalculation.chromaticNumberExact(graph);
+			case CHROMATIC_NUMBER_GREEDY:
+				return ChromaticMetricCalculation.chromaticNumberGreedy(graph);
+			case CHROMATIC_INDEX:
+				return ChromaticMetricCalculation.chromaticIndex(graph);
 			default:
 				throw new MetricChoiceException(NOT_IMPLEMENTED_CHOICE_MESSAGE);
 		}

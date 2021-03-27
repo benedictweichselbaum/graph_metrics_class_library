@@ -29,7 +29,20 @@ public class TryOutMain {
         graph.addEdge("Köln", "Stade", 300);
         graph.addEdge("Stade", "Stuttgart", 400);
         graph.printOutGraph();
-        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.NUMBER_OF_CONNECTED_COMPONENTS));
-        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.RADIUS));
+
+        Graph<Integer, Integer> graph2 = new SimpleUndirectedAdjacencyListGraph<>();
+        graph2.addNode(1);
+        graph2.addNode(2);
+        graph2.addNode(3);
+        graph2.addNode(4);
+        graph2.addNode(5);
+        graph2.addEdge(1, 2, 1);
+        graph2.addEdge(1, 3, 1);
+        graph2.addEdge(2, 4, 1);
+        graph2.addEdge(3, 4, 1);
+        graph2.addEdge(5, 3, 1);
+        graph2.addEdge(5, 1, 1);
+        System.out.println(MetricsCalculation.calculateNodeMetric(graph, "Stuttgart", NodeMetric.OUT_DEGREE));
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.CHROMATIC_NUMBER_GREEDY));
     }
 }
