@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> implements Graph<N, E> {
+public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> implements Graph<N, E>, UndirectedGraph, SimpleGraph {
 
 	private static final String ADD_EDGE_EXCEPTION_MESSAGE = "No edge insertion possible";
 	private static final String ADD_NODE_EXCEPTION_MESSAGE = "Node already exists";

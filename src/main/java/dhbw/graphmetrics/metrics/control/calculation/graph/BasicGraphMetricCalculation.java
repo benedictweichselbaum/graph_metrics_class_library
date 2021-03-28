@@ -1,7 +1,9 @@
 
 package dhbw.graphmetrics.metrics.control.calculation.graph;
 
+import dhbw.graphmetrics.graph.DirectedGraph;
 import dhbw.graphmetrics.graph.Graph;
+import dhbw.graphmetrics.graph.UndirectedGraph;
 import dhbw.graphmetrics.metrics.control.calculation.node.BasicNodeMetricCalculation;
 import dhbw.graphmetrics.metrics.control.exceptions.MetricCalculationException;
 import dhbw.graphmetrics.metrics.control.helper.SearchAlgorithms;
@@ -21,7 +23,13 @@ public final class BasicGraphMetricCalculation {
 	}
 
 	public static <N extends Comparable<N>, E> Integer size(Graph<N, E> graph) {
-		return graph.edges().size();
+		if (graph instanceof UndirectedGraph) {
+			return graph.edges().size() / 2;
+		} else if (graph instanceof DirectedGraph) {
+			return graph.edges().size();
+		} else {
+			throw new MetricCalculationException(METRIC_CALCULATION_EXCEPTION_MESSAGE);
+		}
 	}
 
 	public static <N extends Comparable<N>, E> Integer maxDegree(Graph<N, E> graph) {

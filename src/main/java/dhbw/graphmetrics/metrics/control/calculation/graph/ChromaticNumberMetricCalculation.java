@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ChromaticMetricCalculation {
+public class ChromaticNumberMetricCalculation {
 
     public static final int NO_COLOR = 0;
     public static final String NODE_NOT_FOUND_IN_LIST_OF_NODE_COLOR_TUPLES_MESSAGE = "Node not found in list of node color tuples";
@@ -33,7 +33,7 @@ public class ChromaticMetricCalculation {
                 .map(node -> new Tuple<>(node, NO_COLOR)).collect(Collectors.toList());
         int maxHighestColor = setOfNodeColorings.size();
         Solution<Integer> solution = new Solution<>(maxHighestColor);
-        permutateAndCheck(graph, setOfNodeColorings, maxHighestColor, maxHighestColor, solution);
+        permuteGraphColoringsAndGetSolution(graph, setOfNodeColorings, maxHighestColor, maxHighestColor, solution);
         return solution.getValue();
     }
 
@@ -52,10 +52,6 @@ public class ChromaticMetricCalculation {
         return highestColorUsed;
     }
 
-    public static <N extends Comparable<N>, E> Integer chromaticIndex (Graph<N, E> graph) {
-        return null;
-    }
-
     private static <N extends Comparable<N>, E> Integer lowestPossibleColor(Graph<N, E> graph, List<Tuple<N, Integer>> sortedNodesWithColor, N node) {
         Set<N> adjacentNodes = graph.adjacentNodes(node);
         List<Integer> adjacentColors = sortedNodesWithColor.stream()
@@ -68,11 +64,11 @@ public class ChromaticMetricCalculation {
         return maxColor;
     }
 
-    private static <N extends Comparable<N>, E> void permutateAndCheck (Graph<N, E> graph,
-                                                                        List<Tuple<N, Integer>> setOfNodeColorings,
-                                                                        int level,
-                                                                        int maxHighestColor,
-                                                                        Solution<Integer> solution) {
+    private static <N extends Comparable<N>, E> void permuteGraphColoringsAndGetSolution(Graph<N, E> graph,
+                                                                                         List<Tuple<N, Integer>> setOfNodeColorings,
+                                                                                         int level,
+                                                                                         int maxHighestColor,
+                                                                                         Solution<Integer> solution) {
         if (level == 0) {
             if (isLegalColoring(graph, setOfNodeColorings)) {
                 solution.setValue(Math.min(solution.getValue(), numberOfDistinctColorings(setOfNodeColorings)));
@@ -80,7 +76,7 @@ public class ChromaticMetricCalculation {
         } else {
             for (int i = 1; i <= maxHighestColor; i++) {
                 setOfNodeColorings.get(level - 1).setSecondObject(i);
-                permutateAndCheck(graph, setOfNodeColorings, level - 1, maxHighestColor, solution);
+                permuteGraphColoringsAndGetSolution(graph, setOfNodeColorings, level - 1, maxHighestColor, solution);
             }
         }
     }

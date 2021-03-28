@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,6 @@ public class DistanceNodeMetricCalculation {
     /**
      * Calculates the distance between two nodes with Uniform Cost Search algorithm.
      * When edge markings are integers they are used for the algorithm
-     * -1 when distance is infinity
      * @param graph graph to work on
      * @param from from node
      * @param to to node
@@ -63,8 +63,7 @@ public class DistanceNodeMetricCalculation {
     }
 
     private static <N extends Comparable<N>, E> boolean edgeMarkingOfGraphIsInteger(Graph<N, E> graph) {
-        return graph.edges().stream().findFirst().orElseThrow(() ->
-                new MetricCalculationException(NO_EDGE_IN_GRAPH_ERROR_MESSAGE)).getMarking() instanceof Integer;
+        return graph.edges().stream().findFirst().filter(neEdge -> neEdge.getMarking() instanceof Integer).isPresent();
     }
 
     private static <N extends Comparable<N>, E> Tuple<N, Integer> createFrontierTuple (Edge<N, E> edgeToTransform,

@@ -43,6 +43,6 @@ public class TryOutMain {
         graph2.addEdge(5, 3, 1);
         graph2.addEdge(5, 1, 1);
         System.out.println(MetricsCalculation.calculateNodeMetric(graph, "Stuttgart", NodeMetric.OUT_DEGREE));
-        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.CHROMATIC_NUMBER_GREEDY));
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph, GraphMetric.DENSITY));
     }
 }

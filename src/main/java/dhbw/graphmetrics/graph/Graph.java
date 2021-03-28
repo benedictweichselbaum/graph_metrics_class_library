@@ -13,6 +13,11 @@ import java.util.Set;
  */
 public interface Graph<N extends Comparable<N>, E> {
 
+	/**
+	 * When nodes are compared with the compareTo method of the
+	 * Comparable interface they are equal if the compareTo method
+	 * returns this number.
+	 */
 	 int DEFAULT_COMPARE_TO_EQUALITY_VALUE = 0;
 
 	/**
