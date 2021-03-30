@@ -3,11 +3,13 @@ package dhbw.graphmetrics.graph;
 import dhbw.graphmetrics.graph.edge.Edge;
 import dhbw.graphmetrics.graph.exceptions.GraphAnalyticException;
 import dhbw.graphmetrics.graph.exceptions.GraphManipulationException;
+import dhbw.graphmetrics.graph.matrix.AdjacencyMatrix;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +38,14 @@ public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> impl
 			this.nodeNeighbourMap.put(node, new ArrayList<>());
 			return this;
 		}
+	}
+
+	@Override
+	public Graph<N, E> addAllNodes(Collection<N> nodes) {
+		for (N node : nodes) {
+			this.addNode(node);
+		}
+		return this;
 	}
 
 	@Override
@@ -133,6 +143,11 @@ public class SimpleUndirectedAdjacencyListGraph<N extends Comparable<N>, E> impl
 		} else {
 			throw new GraphAnalyticException(FIND_ADJACENT_NODES_EXCEPTION_MESSAGE);
 		}
+	}
+
+	@Override
+	public AdjacencyMatrix<N, E> adjacencyMatrix() {
+		return new AdjacencyMatrix<>(this.nodes(), this.edges());
 	}
 
 	@Override

@@ -55,7 +55,7 @@ public final class BasicGraphMetricCalculation {
 		List<N> visitedNodes = new ArrayList<>();
 		for (N node : graph.nodes()) {
 			if (!visitedNodes.contains(node)) {
-				SearchAlgorithms.depthFirstSearch(graph, node, visitedNodes);
+				visitedNodes.addAll(SearchAlgorithms.depthFirstVisitingSearch(graph, node));
 				numberOfComponents++;
 			}
 		}

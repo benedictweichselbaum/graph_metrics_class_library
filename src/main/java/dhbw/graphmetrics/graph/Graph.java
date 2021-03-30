@@ -2,7 +2,9 @@ package dhbw.graphmetrics.graph;
 
 
 import dhbw.graphmetrics.graph.edge.Edge;
+import dhbw.graphmetrics.graph.matrix.AdjacencyMatrix;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +30,13 @@ public interface Graph<N extends Comparable<N>, E> {
 	Graph<N, E> addNode(N node);
 
 	/**
+	 * Method that adds multiple
+	 * @param node
+	 * @return
+	 */
+	Graph<N, E> addAllNodes(Collection<N> node);
+
+	/**
 	 * Method that adds edge between two nodes. Edge has a edge marking
 	* @param from from node
 	* @param to to node
@@ -40,7 +49,7 @@ public interface Graph<N extends Comparable<N>, E> {
 	* @param node to delete
 	* @return this graph
 	*/
-	Graph<N, E> deleteNode(N node);
+	Graph<N, E> deleteNode(N nodes);
 
 	/**
 	 * Method that deletes certain edge
@@ -97,6 +106,12 @@ public interface Graph<N extends Comparable<N>, E> {
 	 * @return equal node in graph (reference)
 	 */
 	N findEqualNode(N node);
+
+	/**
+	 * Returns a representation of the graph as an adjacency matrix for analytics
+	 * @return adjacency matrix representation
+	 */
+	AdjacencyMatrix<N, E> adjacencyMatrix();
 
 	/**
 	 * Method that prints out the graph

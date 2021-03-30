@@ -3,13 +3,16 @@ package dhbw.graphmetrics.metrics.control.distributor;
 import dhbw.graphmetrics.graph.Graph;
 import dhbw.graphmetrics.metrics.GraphMetric;
 import dhbw.graphmetrics.metrics.NodeMetric;
+import dhbw.graphmetrics.metrics.NodeToNodeMetric;
 import dhbw.graphmetrics.metrics.control.calculation.graph.BasicGraphMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.graph.ChromaticIndexMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.graph.ChromaticNumberMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.graph.DensityMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.graph.DistanceGraphMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.node.BasicNodeMetricCalculation;
+import dhbw.graphmetrics.metrics.control.calculation.node.CentralityMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.node.DistanceNodeMetricCalculation;
+import dhbw.graphmetrics.metrics.control.calculation.nodetonode.NodeToNodeDistanceMetricCalculation;
 import dhbw.graphmetrics.metrics.control.exceptions.MetricChoiceException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -60,6 +63,25 @@ public final class GraphMetricCalculationDistribution {
 				return BasicNodeMetricCalculation.outDegree(graph, node);
 			case ECCENTRICITY:
 				return DistanceNodeMetricCalculation.eccentricity(graph, node);
+			case DEGREE_CENTRALITY:
+				return CentralityMetricCalculation.degreeCentrality(graph, node);
+			case CLOSENESS_CENTRALITY:
+				return CentralityMetricCalculation.closenessCentrality(graph, node);
+			case BETWEENNESS_CENTRALITY:
+				return CentralityMetricCalculation.betweennessCentrality(graph, node);
+			case EIGENVECTOR_CENTRALITY:
+				return CentralityMetricCalculation.eigenvectorCentrality(graph, node);
+			default:
+				throw new MetricChoiceException(NOT_IMPLEMENTED_CHOICE_MESSAGE);
+		}
+	}
+
+	public static <N extends Comparable<N>, E> Number distributeNodeToNodeMetricCalculation(Graph<N, E> graph, N node1, N node2, NodeToNodeMetric metric) {
+		switch (metric) {
+			case DISTANCE:
+				return NodeToNodeDistanceMetricCalculation.distance(graph, node1, node2, false);
+			case DISTANCE_BASED_ON_MARKING:
+				return NodeToNodeDistanceMetricCalculation.distance(graph, node1, node2, true);
 			default:
 				throw new MetricChoiceException(NOT_IMPLEMENTED_CHOICE_MESSAGE);
 		}
