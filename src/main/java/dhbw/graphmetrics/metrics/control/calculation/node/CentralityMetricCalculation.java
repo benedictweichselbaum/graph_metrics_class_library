@@ -4,17 +4,21 @@ import dhbw.graphmetrics.graph.Graph;
 import dhbw.graphmetrics.graph.matrix.AdjacencyMatrix;
 import dhbw.graphmetrics.metrics.control.calculation.graph.BasicGraphMetricCalculation;
 import dhbw.graphmetrics.metrics.control.calculation.nodetonode.NodeToNodeDistanceMetricCalculation;
+import dhbw.graphmetrics.metrics.control.helper.MapHelper;
 import dhbw.graphmetrics.metrics.control.helper.SearchAlgorithms;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 
+import java.util.Map;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CentralityMetricCalculation {
 
     public static final double INFINITY = Double.MAX_VALUE;
     public static final double MINIMUM_CONVERGING_DISTANCE = 0.001;
+    public static final double MODERATION_FACTOR = 0.85;
 
     public static <N extends Comparable<N>, E> Integer degreeCentrality(Graph<N, E> graph, N node) {
         return BasicNodeMetricCalculation.degree(graph, node);
@@ -55,6 +59,41 @@ public class CentralityMetricCalculation {
         double[][] eigenvectorCentralityVector = powerIteration(new Array2DRowRealMatrix(edgeOneAdjacencyMatrix),
                 createStartVector(edgeOneAdjacencyMatrix.length),null);
         return eigenvectorCentralityVector[adjacencyMatrix.getNodeIndexMap().get(node)][0];
+    }
+
+    public static <N extends Comparable<N>, E> Double pageRank(Graph<N, E> graph, N node) {
+        Map<N, Double> initialPageRankMap = MapHelper.fillMapWithDefaultValue(graph.nodes(),
+                1.0 / BasicGraphMetricCalculation.order(graph));
+        return pageRankIteration(graph, MapHelper.cloneMap(initialPageRankMap), initialPageRankMap).get(node);
+    }
+
+    private static <N extends Comparable<N>, E> Map<N, Double> pageRankIteration(Graph<N, E> graph,
+                                                                       Map<N, Double> previousPageRankMap,
+                                                                       Map<N, Double> pageRankMap) {
+        Map<N, Double> newPageRankMap = MapHelper.cloneMap(pageRankMap);
+        for (N node : graph.nodes()) {
+            double newPageRank = 1 - MODERATION_FACTOR;
+            double pageRankAddend = 0;
+            for (N adjacentNode : graph.adjacentNodes(node)) {
+                pageRankAddend += newPageRankMap.get(adjacentNode) / BasicNodeMetricCalculation.outDegree(graph, adjacentNode);
+            }
+            pageRankAddend *= MODERATION_FACTOR;
+            newPageRankMap.put(node, newPageRank + pageRankAddend);
+        }
+        if (pageRankConverges(previousPageRankMap, newPageRankMap)) {
+            return newPageRankMap;
+        } else {
+            return pageRankIteration(graph, pageRankMap, newPageRankMap);
+        }
+    }
+
+    private static <N> boolean pageRankConverges(Map<N, Double> previousPageRankMap, Map<N, Double> pageRankMap) {
+        boolean converged = true;
+        for (Map.Entry<N, Double> entry : pageRankMap.entrySet()) {
+            converged &= Math.abs(pageRankMap.get(entry.getKey()) - previousPageRankMap.get(entry.getKey()))
+                    <= MINIMUM_CONVERGING_DISTANCE;
+        }
+        return converged;
     }
 
     private static double[][] powerIteration(RealMatrix adjacencyMatrix, RealMatrix vector, Double previousNormalizedValue) {

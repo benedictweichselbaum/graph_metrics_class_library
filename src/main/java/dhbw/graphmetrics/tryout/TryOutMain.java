@@ -54,6 +54,6 @@ public class TryOutMain {
         graph2.addEdge(8, 2, 1);
         AdjacencyMatrix<Integer, Integer> adjacencyMatrix = graph2.adjacencyMatrix();
         graph2.printOutGraph();
-        System.out.println(MetricsCalculation.calculateNodeMetric(graph2, 7, NodeMetric.EIGENVECTOR_CENTRALITY));
+        System.out.println(MetricsCalculation.calculateNodeMetric(graph2, 5, NodeMetric.PAGE_RANK));
     }
 }

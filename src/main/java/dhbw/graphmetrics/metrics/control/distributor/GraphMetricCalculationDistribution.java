@@ -71,6 +71,8 @@ public final class GraphMetricCalculationDistribution {
 				return CentralityMetricCalculation.betweennessCentrality(graph, node);
 			case EIGENVECTOR_CENTRALITY:
 				return CentralityMetricCalculation.eigenvectorCentrality(graph, node);
+			case PAGE_RANK:
+				return CentralityMetricCalculation.pageRank(graph, node);
 			default:
 				throw new MetricChoiceException(NOT_IMPLEMENTED_CHOICE_MESSAGE);
 		}
