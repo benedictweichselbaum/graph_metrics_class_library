@@ -55,6 +55,19 @@ public class TryOutMain {
         graph2.addEdge(8, 2, 1);
         AdjacencyMatrix<Integer, Integer> adjacencyMatrix = graph2.adjacencyMatrix();
         graph2.printOutGraph();
-        System.out.println(MetricsCalculation.calculateGraphMetric(graph2, GraphMetric.SIZE));
+
+        Graph<Integer, Integer> graph3 = new SimpleUndirectedAdjacencyListGraph<>();
+        graph3.addNode(1);
+        graph3.addNode(2);
+        graph3.addNode(3);
+        graph3.addNode(4);
+        graph3.addEdge(1, 2, 1);
+        graph3.addEdge(1, 3, 1);
+        graph3.addEdge(2, 4, 1);
+        graph3.addEdge(2, 3, 1);
+        graph3.addEdge(3, 4, 1);
+        graph3.addEdge(1, 4, 1);
+
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph3, GraphMetric.CHROMATIC_INDEX));
     }
 }

@@ -1,6 +1,5 @@
 package dhbw.graphmetrics.metrics;
 
-
 public enum GraphMetric {
 	ORDER,
 	SIZE,
@@ -13,5 +12,6 @@ public enum GraphMetric {
 	CHROMATIC_NUMBER,
 	CHROMATIC_NUMBER_GREEDY,
 	CHROMATIC_INDEX,
+	CHROMATIC_INDEX_GREEDY,
 	DENSITY
 }

@@ -45,7 +45,9 @@ public final class GraphMetricCalculationDistribution {
 			case CHROMATIC_NUMBER_GREEDY:
 				return ChromaticNumberMetricCalculation.chromaticNumberGreedy(graph);
 			case CHROMATIC_INDEX:
-				return ChromaticIndexMetricCalculation.chromaticIndex(graph);
+				return ChromaticIndexMetricCalculation.chromaticIndexExact(graph);
+			case CHROMATIC_INDEX_GREEDY:
+				return ChromaticIndexMetricCalculation.chromaticIndexGreedy(graph);
 			case DENSITY:
 				return DensityMetricCalculation.density(graph);
 			default:
@@ -84,6 +86,8 @@ public final class GraphMetricCalculationDistribution {
 				return NodeToNodeDistanceMetricCalculation.distance(graph, node1, node2, false);
 			case DISTANCE_BASED_ON_MARKING:
 				return NodeToNodeDistanceMetricCalculation.distance(graph, node1, node2, true);
+			case NUMBER_OF_SHORTEST_PATHS:
+				return NodeToNodeDistanceMetricCalculation.numberOfShortestPaths(graph, node1, node2);
 			default:
 				throw new MetricChoiceException(NOT_IMPLEMENTED_CHOICE_MESSAGE);
 		}
