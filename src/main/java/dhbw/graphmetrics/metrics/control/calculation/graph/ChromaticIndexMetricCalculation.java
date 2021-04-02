@@ -5,7 +5,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ChromaticIndexMetricCalculation {
+public final class ChromaticIndexMetricCalculation {
     public static <N extends Comparable<N>, E> Integer chromaticIndex (Graph<N, E> graph) {
         return null;
     }

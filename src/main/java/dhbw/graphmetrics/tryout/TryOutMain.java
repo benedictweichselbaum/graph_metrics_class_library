@@ -1,6 +1,7 @@
 package dhbw.graphmetrics.tryout;
 
 import dhbw.graphmetrics.graph.Graph;
+import dhbw.graphmetrics.graph.SimpleDirectedAdjacencyListGraph;
 import dhbw.graphmetrics.graph.SimpleUndirectedAdjacencyListGraph;
 import dhbw.graphmetrics.graph.factory.DefaultGraphFactory;
 import dhbw.graphmetrics.graph.matrix.AdjacencyMatrix;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 
 public class TryOutMain {
     public static void main(String[] args) {
-        Graph<String, Integer> graph = new SimpleUndirectedAdjacencyListGraph<>();
+        Graph<String, Integer> graph = new SimpleDirectedAdjacencyListGraph<>();
         graph.addNode("München");
         graph.addNode("Nürnberg");
         graph.addNode("Hamburg");
@@ -33,7 +34,7 @@ public class TryOutMain {
         graph.addEdge("Köln", "Stade", 300);
         graph.addEdge("Stade", "Stuttgart", 400);
 
-        Graph<Integer, Integer> graph2 = new SimpleUndirectedAdjacencyListGraph<>();
+        Graph<Integer, Integer> graph2 = new SimpleDirectedAdjacencyListGraph<>();
         graph2.addNode(1);
         graph2.addNode(2);
         graph2.addNode(3);
@@ -54,6 +55,6 @@ public class TryOutMain {
         graph2.addEdge(8, 2, 1);
         AdjacencyMatrix<Integer, Integer> adjacencyMatrix = graph2.adjacencyMatrix();
         graph2.printOutGraph();
-        System.out.println(MetricsCalculation.calculateNodeMetric(graph2, 5, NodeMetric.PAGE_RANK));
+        System.out.println(MetricsCalculation.calculateGraphMetric(graph2, GraphMetric.SIZE));
     }
 }

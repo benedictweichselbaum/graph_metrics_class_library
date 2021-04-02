@@ -15,7 +15,7 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SearchAlgorithms {
+public final class SearchAlgorithms {
 
     public static final int DEFAULT_DISTANCE = 1;
 
@@ -68,10 +68,10 @@ public class SearchAlgorithms {
                     searchQueue.add(childNode);
                     visitedNodes.add(childNode);
                 }
-                if (distances.get(childNode) > distances.get(actNode) + 1) {
-                    distances.replace(childNode, distances.get(actNode) + 1);
+                if (distances.get(childNode) > distances.get(actNode) + DEFAULT_DISTANCE) {
+                    distances.replace(childNode, distances.get(actNode) + DEFAULT_DISTANCE);
                     paths.replace(childNode, paths.get(actNode));
-                } else if (distances.get(childNode) == distances.get(actNode) + 1) {
+                } else if (distances.get(childNode) == distances.get(actNode) + DEFAULT_DISTANCE) {
                     paths.replace(childNode, paths.get(childNode) + paths.get(actNode));
                 }
             }

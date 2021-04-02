@@ -14,7 +14,7 @@ import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class NodeToNodeDistanceMetricCalculation {
+public final class NodeToNodeDistanceMetricCalculation {
 
     public static final int INFINITY = Integer.MAX_VALUE;
     private static final Integer DEFAULT_EDGE_WEIGHT = 1;

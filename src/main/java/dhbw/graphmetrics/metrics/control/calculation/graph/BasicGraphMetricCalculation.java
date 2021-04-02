@@ -1,9 +1,9 @@
 
 package dhbw.graphmetrics.metrics.control.calculation.graph;
 
-import dhbw.graphmetrics.graph.DirectedGraph;
+import dhbw.graphmetrics.graph.marker.DirectedGraph;
 import dhbw.graphmetrics.graph.Graph;
-import dhbw.graphmetrics.graph.UndirectedGraph;
+import dhbw.graphmetrics.graph.marker.UndirectedGraph;
 import dhbw.graphmetrics.metrics.control.calculation.node.BasicNodeMetricCalculation;
 import dhbw.graphmetrics.metrics.control.exceptions.MetricCalculationException;
 import dhbw.graphmetrics.metrics.control.helper.SearchAlgorithms;

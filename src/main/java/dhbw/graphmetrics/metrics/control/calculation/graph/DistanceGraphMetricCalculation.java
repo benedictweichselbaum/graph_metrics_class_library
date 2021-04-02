@@ -7,9 +7,10 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DistanceGraphMetricCalculation {
+public final class DistanceGraphMetricCalculation {
 
-    public static final String RADIUS_CALCULATION_ERROR_MESSAGE = "Radius Calculation error";
+    private static final String RADIUS_CALCULATION_ERROR_MESSAGE = "Radius Calculation error";
+    private static final String DIAMETER_CALCULATION_ERROR_MESSAGE = "Diameter Calculation error";
 
     public static <N extends Comparable<N>, E> Integer radius (Graph<N, E> graph) {
         return graph.nodes().stream().mapToInt(node -> DistanceNodeMetricCalculation.eccentricity(graph, node)).min()
@@ -18,6 +19,6 @@ public class DistanceGraphMetricCalculation {
 
     public static <N extends Comparable<N>, E> Integer diameter (Graph<N, E> graph) {
         return graph.nodes().stream().mapToInt(node -> DistanceNodeMetricCalculation.eccentricity(graph, node)).max()
-                .orElseThrow(() -> new MetricCalculationException(RADIUS_CALCULATION_ERROR_MESSAGE));
+                .orElseThrow(() -> new MetricCalculationException(DIAMETER_CALCULATION_ERROR_MESSAGE));
     }
 }

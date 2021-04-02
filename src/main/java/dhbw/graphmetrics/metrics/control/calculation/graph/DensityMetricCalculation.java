@@ -1,16 +1,16 @@
 package dhbw.graphmetrics.metrics.control.calculation.graph;
 
-import dhbw.graphmetrics.graph.DirectedGraph;
+import dhbw.graphmetrics.graph.marker.DirectedGraph;
 import dhbw.graphmetrics.graph.Graph;
-import dhbw.graphmetrics.graph.SimpleGraph;
-import dhbw.graphmetrics.graph.UndirectedGraph;
+import dhbw.graphmetrics.graph.marker.SimpleGraph;
+import dhbw.graphmetrics.graph.marker.UndirectedGraph;
 import dhbw.graphmetrics.metrics.control.exceptions.MetricCalculationException;
 import dhbw.graphmetrics.metrics.control.helper.MathMetricHelper;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DensityMetricCalculation {
+public final class DensityMetricCalculation {
 
     public static final String ONLY_SIMPLE_GRAPHS_ERROR_MESSAGE =
             "Only simple graphs (no multiple edges, loops) are allowed when calculating density";

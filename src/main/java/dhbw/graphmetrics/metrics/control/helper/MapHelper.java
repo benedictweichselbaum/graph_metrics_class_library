@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class MapHelper {
+public final class MapHelper {
 
     public static <K extends Comparable<K>, V> Map<K, V> fillMapWithDefaultValue(Set<K> keys, V defaultValue) {
         Map<K, V> hashMap = new HashMap<>();

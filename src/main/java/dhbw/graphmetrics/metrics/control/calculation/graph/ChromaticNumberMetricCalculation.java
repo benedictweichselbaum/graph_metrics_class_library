@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ChromaticNumberMetricCalculation {
+public final class ChromaticNumberMetricCalculation {
 
     public static final int NO_COLOR = 0;
     public static final String NODE_NOT_FOUND_IN_LIST_OF_NODE_COLOR_TUPLES_MESSAGE = "Node not found in list of node color tuples";

@@ -49,7 +49,7 @@ public interface Graph<N extends Comparable<N>, E> {
 	* @param node to delete
 	* @return this graph
 	*/
-	Graph<N, E> deleteNode(N nodes);
+	Graph<N, E> deleteNode(N node);
 
 	/**
 	 * Method that deletes certain edge

@@ -7,7 +7,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DistanceNodeMetricCalculation {
+public final class DistanceNodeMetricCalculation {
 
     public static final String ECCENTRICITY_CALCULATION_ERROR_MESSAGE = "Eccentricity calculation error";
 

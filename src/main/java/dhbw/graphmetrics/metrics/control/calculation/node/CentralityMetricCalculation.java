@@ -14,7 +14,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class CentralityMetricCalculation {
+public final class CentralityMetricCalculation {
 
     public static final double INFINITY = Double.MAX_VALUE;
     public static final double MINIMUM_CONVERGING_DISTANCE = 0.001;
