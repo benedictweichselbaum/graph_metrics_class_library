@@ -10,6 +10,7 @@ import dhbw.graphmetrics.metrics.NodeMetric;
 import dhbw.graphmetrics.metrics.boundary.MetricsCalculation;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class TryOutMain {
     public static void main(String[] args) {
@@ -68,6 +69,6 @@ public class TryOutMain {
         graph3.addEdge(3, 4, 1);
         graph3.addEdge(1, 4, 1);
 
-        System.out.println(MetricsCalculation.calculateGraphMetric(graph3, GraphMetric.CHROMATIC_INDEX));
+        System.out.println(MetricsCalculation.calculateGraphMetric(DefaultGraphFactory.completeGraph(List.of(1, 2, 3, 4,5,6,7), null), GraphMetric.CHROMATIC_NUMBER));
     }
 }

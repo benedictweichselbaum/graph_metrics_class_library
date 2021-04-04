@@ -88,12 +88,8 @@ public final class CentralityMetricCalculation {
     }
 
     private static <N> boolean pageRankConverges(Map<N, Double> previousPageRankMap, Map<N, Double> pageRankMap) {
-        boolean converged = true;
-        for (Map.Entry<N, Double> entry : pageRankMap.entrySet()) {
-            converged &= Math.abs(pageRankMap.get(entry.getKey()) - previousPageRankMap.get(entry.getKey()))
-                    <= MINIMUM_CONVERGING_DISTANCE;
-        }
-        return converged;
+        return pageRankMap.entrySet().stream().allMatch(entry -> Math.abs(pageRankMap.get(entry.getKey()) - previousPageRankMap.get(entry.getKey()))
+                <= MINIMUM_CONVERGING_DISTANCE);
     }
 
     private static double[][] powerIteration(RealMatrix adjacencyMatrix, RealMatrix vector, Double previousNormalizedValue) {

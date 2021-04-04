@@ -4,7 +4,10 @@ import dhbw.graphmetrics.graph.SimpleUndirectedAdjacencyListGraph;
 import dhbw.graphmetrics.graph.exceptions.GraphCreationException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DefaultGraphFactory {
@@ -25,5 +28,33 @@ public class DefaultGraphFactory {
             }
         }
         return graph;
+    }
+
+    public static  <N extends Comparable<N>, E> SimpleUndirectedAdjacencyListGraph<N, E> completeGraph(List<N> nodes, E edgeMarking) {
+        SimpleUndirectedAdjacencyListGraph<N, E> newGraph = new SimpleUndirectedAdjacencyListGraph<>();
+        newGraph.addAllNodes(nodes);
+        List<N> connectedNodes = new LinkedList<>();
+        for (N node1 : nodes) {
+            connectedNodes.add(node1);
+            for (N node2 : nodes) {
+                if (!connectedNodes.contains(node2)) {
+                    newGraph.addEdge(node1, node2, edgeMarking);
+                }
+            }
+        }
+        return newGraph;
+    }
+
+    public static  <N extends Comparable<N>, E> SimpleUndirectedAdjacencyListGraph<N, E> completeBipartiteGraph(
+            Set<N> firstNodeSet, Set<N> secondNodeSet, E edgeMarking) {
+        SimpleUndirectedAdjacencyListGraph<N, E> newGraph = new SimpleUndirectedAdjacencyListGraph<>();
+        newGraph.addAllNodes(firstNodeSet);
+        newGraph.addAllNodes(secondNodeSet);
+        for (N nodeFromFirstSet : firstNodeSet) {
+            for (N nodeFromSecondSet : secondNodeSet) {
+                newGraph.addEdge(nodeFromFirstSet, nodeFromSecondSet, edgeMarking);
+            }
+        }
+        return newGraph;
     }
 }
