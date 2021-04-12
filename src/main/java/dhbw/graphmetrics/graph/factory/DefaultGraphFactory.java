@@ -5,6 +5,7 @@ import dhbw.graphmetrics.graph.exceptions.GraphCreationException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class DefaultGraphFactory {
         return graph;
     }
 
-    public static  <N extends Comparable<N>, E> SimpleUndirectedAdjacencyListGraph<N, E> completeGraph(List<N> nodes, E edgeMarking) {
+    public static  <N extends Comparable<N>, E> SimpleUndirectedAdjacencyListGraph<N, E> completeGraph(Collection<N> nodes, E edgeMarking) {
         SimpleUndirectedAdjacencyListGraph<N, E> newGraph = new SimpleUndirectedAdjacencyListGraph<>();
         newGraph.addAllNodes(nodes);
         List<N> connectedNodes = new LinkedList<>();
@@ -46,7 +47,7 @@ public class DefaultGraphFactory {
     }
 
     public static  <N extends Comparable<N>, E> SimpleUndirectedAdjacencyListGraph<N, E> completeBipartiteGraph(
-            Set<N> firstNodeSet, Set<N> secondNodeSet, E edgeMarking) {
+            Collection<N> firstNodeSet, Collection<N> secondNodeSet, E edgeMarking) {
         SimpleUndirectedAdjacencyListGraph<N, E> newGraph = new SimpleUndirectedAdjacencyListGraph<>();
         newGraph.addAllNodes(firstNodeSet);
         newGraph.addAllNodes(secondNodeSet);
