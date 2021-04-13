@@ -1,7 +1,7 @@
 package dhbw.graphmetrics.metrics.control.calculation.graph;
 
-import dhbw.graphmetrics.graph.marker.DirectedGraph;
 import dhbw.graphmetrics.graph.Graph;
+import dhbw.graphmetrics.graph.marker.DirectedGraph;
 import dhbw.graphmetrics.graph.marker.SimpleGraph;
 import dhbw.graphmetrics.graph.marker.UndirectedGraph;
 import dhbw.graphmetrics.metrics.control.exceptions.MetricCalculationException;

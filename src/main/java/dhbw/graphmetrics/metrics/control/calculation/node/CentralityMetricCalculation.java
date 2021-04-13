@@ -75,7 +75,7 @@ public final class CentralityMetricCalculation {
             double newPageRank = 1 - MODERATION_FACTOR;
             double pageRankAddend = 0;
             for (N adjacentNode : graph.adjacentNodes(node)) {
-                pageRankAddend += newPageRankMap.get(adjacentNode) / BasicNodeMetricCalculation.outDegree(graph, adjacentNode);
+                pageRankAddend += previousPageRankMap.get(adjacentNode) / BasicNodeMetricCalculation.outDegree(graph, adjacentNode);
             }
             pageRankAddend *= MODERATION_FACTOR;
             newPageRankMap.put(node, newPageRank + pageRankAddend);

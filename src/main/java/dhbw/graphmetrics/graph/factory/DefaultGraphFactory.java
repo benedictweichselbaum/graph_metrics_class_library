@@ -8,10 +8,9 @@ import lombok.NoArgsConstructor;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class DefaultGraphFactory {
+public final class DefaultGraphFactory {
 
     public static final String EQUAL_NO_OF_NODES_EDGE_MARKINGS_ERROR = "Same number of nodes as edge markings";
 
@@ -57,5 +56,14 @@ public class DefaultGraphFactory {
             }
         }
         return newGraph;
+    }
+
+    public static  <N extends Comparable<N>, E> SimpleUndirectedAdjacencyListGraph<N, E> lineGraph(List<N> nodes, E edgeMarking) {
+        SimpleUndirectedAdjacencyListGraph<N, E> graph = new SimpleUndirectedAdjacencyListGraph<>();
+        graph.addAllNodes(nodes);
+        for (int i = 0; i < nodes.size() - 1; i++) {
+            graph.addEdge(nodes.get(i), nodes.get(i + 1), edgeMarking);
+        }
+        return graph;
     }
 }

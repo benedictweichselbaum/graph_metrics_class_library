@@ -6,10 +6,8 @@ import dhbw.graphmetrics.graph.SimpleUndirectedAdjacencyListGraph;
 import dhbw.graphmetrics.graph.factory.DefaultGraphFactory;
 import dhbw.graphmetrics.graph.matrix.AdjacencyMatrix;
 import dhbw.graphmetrics.metrics.GraphMetric;
-import dhbw.graphmetrics.metrics.NodeMetric;
 import dhbw.graphmetrics.metrics.boundary.MetricsCalculation;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class TryOutMain {
