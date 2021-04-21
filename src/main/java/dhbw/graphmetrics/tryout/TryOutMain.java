@@ -5,6 +5,7 @@ import dhbw.graphmetrics.graph.SimpleDirectedAdjacencyListGraph;
 import dhbw.graphmetrics.graph.SimpleUndirectedAdjacencyListGraph;
 import dhbw.graphmetrics.graph.factory.DefaultGraphFactory;
 import dhbw.graphmetrics.graph.matrix.AdjacencyMatrix;
+import dhbw.graphmetrics.graph.persistence.GraphPersistence;
 import dhbw.graphmetrics.metrics.GraphMetric;
 import dhbw.graphmetrics.metrics.boundary.MetricsCalculation;
 
@@ -67,6 +68,6 @@ public class TryOutMain {
         graph3.addEdge(3, 4, 1);
         graph3.addEdge(1, 4, 1);
 
-        System.out.println(MetricsCalculation.calculateGraphMetric(DefaultGraphFactory.completeGraph(List.of(1, 2, 3, 4,5,6,7), null), GraphMetric.CHROMATIC_NUMBER));
+
     }
 }

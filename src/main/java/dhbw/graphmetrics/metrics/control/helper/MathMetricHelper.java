@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 public final class MathMetricHelper {
 
     public static Long binomialCoefficient(Integer n, Integer k) {
+        if (k == 0) return 1L;
         if (2 * k > n) k = n - k;
         long solution = 1L;
         for (int i = 1; i <= k; i++) {
