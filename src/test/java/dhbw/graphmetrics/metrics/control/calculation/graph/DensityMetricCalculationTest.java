@@ -16,8 +16,20 @@ class DensityMetricCalculationTest extends AbstractTest {
         Assertions.assertEquals(1.0, DensityMetricCalculation.density(testGraph));
         testGraph.deleteEdge(1, 2);
         Assertions.assertEquals(2.0/3.0, DensityMetricCalculation.density(testGraph));
+    }
+
+    @Test
+    void density_noEdges() {
+        Graph<Integer, Integer> testGraph = DefaultGraphFactory.completeGraph(Arrays.asList(1, 2, 3), null);
+        testGraph.deleteEdge(1, 2);
         testGraph.deleteEdge(2, 3);
         testGraph.deleteEdge(3, 1);
+        Assertions.assertEquals(0, DensityMetricCalculation.density(testGraph));
+    }
+
+    @Test
+    void density_emptyGraph() {
+        Graph<Integer, Integer> testGraph = createUndirectedGraphWithNumberOfNodes(0);
         Assertions.assertEquals(0, DensityMetricCalculation.density(testGraph));
     }
 }

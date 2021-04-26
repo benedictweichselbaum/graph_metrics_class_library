@@ -29,6 +29,7 @@ public final class ChromaticNumberMetricCalculation {
      * @return chromatic number of graph
      */
     public static <N extends Comparable<N>, E> Integer chromaticNumberExact (Graph<N, E> graph) {
+        if (BasicGraphMetricCalculation.order(graph) == 0) return 0;
         List<Tuple<N, Integer>> setOfNodeColorings = graph.nodes().stream()
                 .map(node -> new Tuple<>(node, NO_COLOR)).collect(Collectors.toList());
         int maxHighestColor = setOfNodeColorings.size();
@@ -38,6 +39,7 @@ public final class ChromaticNumberMetricCalculation {
     }
 
     public static <N extends Comparable<N>, E> Integer chromaticNumberGreedy (Graph<N, E> graph) {
+        if (BasicGraphMetricCalculation.order(graph) == 0) return 0;
         Comparator<Tuple<N, Integer>> comparator = (firstTuple, secondTuple) ->
                 BasicNodeMetricCalculation.outDegree(graph, secondTuple.getFirstObject()) -
                         BasicNodeMetricCalculation.outDegree(graph, firstTuple.getFirstObject());

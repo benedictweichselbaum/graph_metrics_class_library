@@ -28,6 +28,20 @@ class ChromaticIndexMetricCalculationTest extends AbstractTest {
     }
 
     @Test
+    void chromaticIndexExact_emptyGraph() {
+        Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(0);
+        Assertions.assertEquals(0,
+                ChromaticIndexMetricCalculation.chromaticIndexExact(graph));
+    }
+
+    @Test
+    void chromaticIndexExact_noEdges() {
+        Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(4);
+        Assertions.assertEquals(0,
+                ChromaticIndexMetricCalculation.chromaticIndexExact(graph));
+    }
+
+    @Test
     void chromaticIndexGreedy() {
         Graph<Integer, Integer> completeBipartiteGraph = DefaultGraphFactory.completeBipartiteGraph(Arrays.asList(1, 2, 3),
                 Arrays.asList(5, 6), null);
@@ -41,5 +55,19 @@ class ChromaticIndexMetricCalculationTest extends AbstractTest {
         triangleGraph.addEdge(3, 1, null);
         Assertions.assertEquals(BasicGraphMetricCalculation.maxDegree(triangleGraph) + 1,
                 ChromaticIndexMetricCalculation.chromaticIndexGreedy(triangleGraph));
+    }
+
+    @Test
+    void chromaticIndexGreedy_emptyGraph() {
+        Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(0);
+        Assertions.assertEquals(0,
+                ChromaticIndexMetricCalculation.chromaticIndexGreedy(graph));
+    }
+
+    @Test
+    void chromaticIndexGreedy_noEdges() {
+        Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(4);
+        Assertions.assertEquals(0,
+                ChromaticIndexMetricCalculation.chromaticIndexGreedy(graph));
     }
 }

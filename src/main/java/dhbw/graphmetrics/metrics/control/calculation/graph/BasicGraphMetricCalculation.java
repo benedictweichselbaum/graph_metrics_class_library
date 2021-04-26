@@ -33,18 +33,21 @@ public final class BasicGraphMetricCalculation {
 	}
 
 	public static <N extends Comparable<N>, E> Integer maxDegree(Graph<N, E> graph) {
+		if (BasicGraphMetricCalculation.order(graph) == 0) return 0;
 		return graph.nodes().stream().mapToInt(node ->
 				BasicNodeMetricCalculation.degree(graph, node)).max()
 				.orElseThrow(() -> new MetricCalculationException(METRIC_CALCULATION_EXCEPTION_MESSAGE));
 	}
 
 	public static <N extends Comparable<N>, E> Integer minDegree(Graph<N, E> graph) {
+		if (BasicGraphMetricCalculation.order(graph) == 0) return 0;
 		return graph.nodes().stream().mapToInt(node ->
 				BasicNodeMetricCalculation.degree(graph, node)).min()
 				.orElseThrow(() -> new MetricCalculationException(METRIC_CALCULATION_EXCEPTION_MESSAGE));
 	}
 
 	public static <N extends Comparable<N>, E> Double avgDegree(Graph<N, E> graph) {
+		if (BasicGraphMetricCalculation.order(graph) == 0) return 0.0;
 		return graph.nodes().stream().mapToInt(node ->
 				BasicNodeMetricCalculation.degree(graph, node)).average()
 				.orElseThrow(() -> new MetricCalculationException(METRIC_CALCULATION_EXCEPTION_MESSAGE));

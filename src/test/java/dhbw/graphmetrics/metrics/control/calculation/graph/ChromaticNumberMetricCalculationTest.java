@@ -23,6 +23,18 @@ class ChromaticNumberMetricCalculationTest extends AbstractTest {
     }
 
     @Test
+    void chromaticNumberExact_emptyGraph() {
+        Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(0);
+        Assertions.assertEquals(0, ChromaticNumberMetricCalculation.chromaticNumberExact(graph));
+    }
+
+    @Test
+    void chromaticNumberExact_noEdges() {
+        Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(4);
+        Assertions.assertEquals(1, ChromaticNumberMetricCalculation.chromaticNumberExact(graph));
+    }
+
+    @Test
     void chromaticNumberGreedy() {
         Graph<Integer, Integer> completeGraph = DefaultGraphFactory.completeGraph(Arrays.asList(1, 2, 3, 4, 5, 6), null);
         Assertions.assertEquals(6, ChromaticNumberMetricCalculation.chromaticNumberGreedy(completeGraph));
@@ -32,5 +44,17 @@ class ChromaticNumberMetricCalculationTest extends AbstractTest {
 
         Graph<Integer, Integer> circleGraphEven = DefaultGraphFactory.circleGraph(Arrays.asList(1, 2, 3, 4, 5, 6), Arrays.asList(1, 1, 1, 1, 1, 1));
         Assertions.assertEquals(2, ChromaticNumberMetricCalculation.chromaticNumberGreedy(circleGraphEven));
+    }
+
+    @Test
+    void chromaticNumberGreedy_emptyGraph() {
+        Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(0);
+        Assertions.assertEquals(0, ChromaticNumberMetricCalculation.chromaticNumberGreedy(graph));
+    }
+
+    @Test
+    void chromaticNumberGreedy_noEdges() {
+        Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(4);
+        Assertions.assertEquals(1, ChromaticNumberMetricCalculation.chromaticNumberGreedy(graph));
     }
 }
