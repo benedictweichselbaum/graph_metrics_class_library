@@ -21,7 +21,17 @@ class DistanceNodeMetricCalculationTest extends AbstractTest {
         testGraph.addEdge(2, 6, null);
         testGraph.addEdge(6, 7, null);
         Assertions.assertEquals(3, DistanceNodeMetricCalculation.eccentricity(testGraph, 1));
-        testGraph.deleteEdge(1, 2);
+    }
+
+    @Test
+    void eccentricity_disconnectedGraph() {
+        Graph<Integer, Integer> testGraph = new SimpleUndirectedAdjacencyListGraph<>();
+        testGraph.addAllNodes(Arrays.asList(1, 2, 3, 4, 5, 6 ,7));
+        testGraph.addEdge(2, 3, null);
+        testGraph.addEdge(2, 4, null);
+        testGraph.addEdge(2, 5, null);
+        testGraph.addEdge(2, 6, null);
+        testGraph.addEdge(6, 7, null);
         Assertions.assertEquals(Integer.MAX_VALUE, DistanceNodeMetricCalculation.eccentricity(testGraph, 1));
     }
 }

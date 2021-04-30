@@ -5,7 +5,9 @@ import dhbw.graphmetrics.graph.Graph;
 import dhbw.graphmetrics.graph.SimpleDirectedAdjacencyListGraph;
 import dhbw.graphmetrics.graph.SimpleUndirectedAdjacencyListGraph;
 import dhbw.graphmetrics.graph.edge.Edge;
+import dhbw.graphmetrics.graph.exceptions.GraphCreationException;
 import dhbw.graphmetrics.graph.marker.DirectedGraph;
+import dhbw.graphmetrics.metrics.control.helper.object.Tuple;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -17,14 +19,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GraphPersistence {
 
     private static final String NEW_LINE = "\n";
+    private static final String DIRECTED_KEY_WORD = "directed";
+    public static final String UNDIRECTED_KEY_WORD = "undirected";
+    public static final String GRAPH_FORMAT_SYNTAX_ERROR = "Graph format syntax error";
 
     public static  <N extends Comparable<N>, E> void persistGraph(Graph<N, E> graph, String path, String fileName) throws IOException {
         try (FileWriter fileWriter = new FileWriter(path + fileName + ".g")) {
@@ -38,35 +47,75 @@ public final class GraphPersistence {
             String data = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
                     .lines()
                     .collect(Collectors.joining(NEW_LINE));
-
+            return convertTextToGraph(data, nodeType, edgeType);
         }
-        return null;
     }
 
     private static <N extends Comparable<N>, E> Graph<N, E> convertTextToGraph(String graph, Class<N> nodeType, Class<E> edgeType) {
         String[] graphArray = graph.split(NEW_LINE);
         Gson gson = new Gson();
         Map<String, String> objectMap = new HashMap<>();
-
-        Graph<N, E> newGraph = "directed".equals(graphArray[0]) ?
+        boolean graphIsDirected = DIRECTED_KEY_WORD.equals(graphArray[0]);
+        Graph<N, E> newGraph = graphIsDirected ?
                 new SimpleDirectedAdjacencyListGraph<>() :
                 new SimpleUndirectedAdjacencyListGraph<>();
+        List<String[]> connections = new ArrayList<>();
         for (int i = 1; i < graphArray.length; i++) {
-            if (graphArray[i].contains("->")) {
-
+            String currentString = graphArray[i].trim();
+            if (!(currentString.startsWith("(") && currentString.endsWith(")"))) {
+                throw new GraphCreationException(GRAPH_FORMAT_SYNTAX_ERROR);
+            }
+            currentString = currentString.substring(1, currentString.length()-1);
+            if (currentString.contains("->")) {
+                String[] connectionString = currentString.split("(\\Q)-[\\E)|(\\Q]->(\\E)");
+                if (connectionString.length != 3) {
+                    throw new GraphCreationException(GRAPH_FORMAT_SYNTAX_ERROR);
+                }
+                connections.add(connectionString);
             } else {
-
+                String[] objectString = currentString.split(" ");
+                if (objectString.length != 2) {
+                    throw new GraphCreationException(GRAPH_FORMAT_SYNTAX_ERROR);
+                }
+                objectMap.put(objectString[0], objectString[1]);
             }
         }
-        return null;
+        Set<String> nodes = new HashSet<>();
+        Map<String, N> nodeMap = new HashMap<>();
+        for (String[] connection : connections) {
+            nodes.add(connection[0]);
+            nodes.add(connection[2]);
+        }
+        nodes.forEach(nodeIdentifier -> {
+            N newNode = gson.fromJson(objectMap.get(nodeIdentifier), nodeType);
+            newGraph.addNode(newNode);
+            nodeMap.put(nodeIdentifier, newNode);
+        });
+        if (graphIsDirected) {
+            connections.forEach(connection -> newGraph.addEdge(nodeMap.get(connection[0]), nodeMap.get(connection[2]), gson.fromJson(objectMap.get(connection[1]), edgeType)));
+        } else {
+            List<Tuple<String, String>> containingEdges = new ArrayList<>();
+            connections = connections.stream().filter(connection -> {
+                if (containingEdges.stream().noneMatch(containEdge ->
+                        (containEdge.getFirstObject().equals(connection[0]) && containEdge.getSecondObject().equals(connection[2])) ||
+                        (containEdge.getFirstObject().equals(connection[2]) && containEdge.getSecondObject().equals(connection[0]))
+                )) {
+                    containingEdges.add(new Tuple<>(connection[0], connection[2]));
+                    return true;
+                }
+                return false;
+            }).collect(Collectors.toList());
+            connections.forEach(connection -> newGraph.addEdge(nodeMap.get(connection[0]), nodeMap.get(connection[2]), gson.fromJson(objectMap.get(connection[1]), edgeType)));
+        }
+        return newGraph;
     }
 
     private static <N extends Comparable<N>, E> String getGraphAsText(Graph<N, E> graph) {
         StringBuilder stringBuilder = new StringBuilder();
         if (graph instanceof DirectedGraph) {
-            stringBuilder.append("directed").append(NEW_LINE);
+            stringBuilder.append(DIRECTED_KEY_WORD).append(NEW_LINE);
         } else {
-            stringBuilder.append("undirected").append(NEW_LINE);
+            stringBuilder.append(UNDIRECTED_KEY_WORD).append(NEW_LINE);
         }
         int objectCounter = 1;
         Map<N, String> nodeIdentifierMap = new HashMap<>();
@@ -80,7 +129,7 @@ public final class GraphPersistence {
             objectCounter++;
         }
         for (Edge<N, E> edge : graph.edges()) {
-            edgeJsonMap.put(String.valueOf(objectCounter), gson.toJson(edge));
+            edgeJsonMap.put(String.valueOf(objectCounter), gson.toJson(edge.getMarking()));
             edgeIdentifierMap.put(edge, String.valueOf(objectCounter));
             objectCounter++;
         }

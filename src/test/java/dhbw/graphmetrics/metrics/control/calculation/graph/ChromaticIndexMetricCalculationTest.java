@@ -45,7 +45,7 @@ class ChromaticIndexMetricCalculationTest extends AbstractTest {
     void chromaticIndexGreedy() {
         Graph<Integer, Integer> completeBipartiteGraph = DefaultGraphFactory.completeBipartiteGraph(Arrays.asList(1, 2, 3),
                 Arrays.asList(5, 6), null);
-        Assertions.assertEquals(3,
+        Assertions.assertEquals(4,
                 ChromaticIndexMetricCalculation.chromaticIndexGreedy(completeBipartiteGraph));
 
         Graph<Integer, Integer> triangleGraph = new SimpleUndirectedAdjacencyListGraph<>();

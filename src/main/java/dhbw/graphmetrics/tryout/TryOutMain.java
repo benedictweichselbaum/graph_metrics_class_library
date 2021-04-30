@@ -12,7 +12,7 @@ import dhbw.graphmetrics.metrics.boundary.MetricsCalculation;
 import java.util.List;
 
 public class TryOutMain {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Graph<String, Integer> graph = new SimpleDirectedAdjacencyListGraph<>();
         graph.addNode("München");
         graph.addNode("Nürnberg");
@@ -23,7 +23,6 @@ public class TryOutMain {
         graph.addNode("Stuttgart");
         graph.addNode("Hannover");
         graph.addNode("Teststadt");
-        graph.addEdge("München", "Nürnberg", 200);
         graph.addEdge("Nürnberg", "Berlin", 500);
         graph.addEdge("Berlin", "Hamburg", 300);
         graph.addEdge("Hamburg", "München", 700);
@@ -33,7 +32,7 @@ public class TryOutMain {
         graph.addEdge("Hannover", "Hamburg", 100);
         graph.addEdge("Köln", "Stade", 300);
         graph.addEdge("Stade", "Stuttgart", 400);
-
+        graph.printOutGraph();
         Graph<Integer, Integer> graph2 = new SimpleDirectedAdjacencyListGraph<>();
         graph2.addNode(1);
         graph2.addNode(2);
@@ -54,7 +53,6 @@ public class TryOutMain {
         graph2.addEdge(5, 8, 1);
         graph2.addEdge(8, 2, 1);
         AdjacencyMatrix<Integer, Integer> adjacencyMatrix = graph2.adjacencyMatrix();
-        graph2.printOutGraph();
 
         Graph<Integer, Integer> graph3 = new SimpleUndirectedAdjacencyListGraph<>();
         graph3.addNode(1);
@@ -68,6 +66,7 @@ public class TryOutMain {
         graph3.addEdge(3, 4, 1);
         graph3.addEdge(1, 4, 1);
 
-
+        GraphPersistence.persistGraph(graph3, "/home/benedict/Documents/Studium/Studienarbeit/Code/", "graph");
+        Graph<Integer, Integer> loadGraph = GraphPersistence.loadGraph("/home/benedict/Documents/Studium/Studienarbeit/Code/graph.g", Integer.class, Integer.class);
     }
 }

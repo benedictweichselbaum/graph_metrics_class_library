@@ -21,11 +21,27 @@ class NodeToNodeDistanceMetricCalculationTest extends AbstractTest {
         testGraph.addEdge(1, 4, 5);
         Assertions.assertEquals(1, NodeToNodeDistanceMetricCalculation.distance(testGraph, 1, 4, false));
         Assertions.assertEquals(3, NodeToNodeDistanceMetricCalculation.distance(testGraph, 1, 4, true));
+    }
 
+    @Test
+    void distance_classCaseException() {
         Graph<Integer, String> graphWithStringMarking = new SimpleUndirectedAdjacencyListGraph<>();
         graphWithStringMarking.addAllNodes(Arrays.asList(1, 2));
         graphWithStringMarking.addEdge(1, 2, "Test");
         Assertions.assertThrows(ClassCastException.class, () -> NodeToNodeDistanceMetricCalculation.distance(graphWithStringMarking, 1, 2, true));
+    }
+
+    @Test
+    void distance_sameNode() {
+        Graph<Integer, Integer> testGraph = new SimpleUndirectedAdjacencyListGraph<>();
+        testGraph.addAllNodes(Arrays.asList(1, 2, 3, 4));
+        testGraph.addEdge(1, 2, 2);
+        testGraph.addEdge(2, 4, 2);
+        testGraph.addEdge(1, 3, 1);
+        testGraph.addEdge(3, 4, 2);
+        testGraph.addEdge(1, 4, 5);
+        Assertions.assertEquals(0, NodeToNodeDistanceMetricCalculation.distance(testGraph, 1, 1, false));
+        Assertions.assertEquals(0, NodeToNodeDistanceMetricCalculation.distance(testGraph, 4, 4, true));
     }
 
     @Test
@@ -38,5 +54,17 @@ class NodeToNodeDistanceMetricCalculationTest extends AbstractTest {
         testGraph.addEdge(3, 4, 2);
         testGraph.addEdge(1, 4, 5);
         Assertions.assertEquals(2, NodeToNodeDistanceMetricCalculation.numberOfShortestPaths(testGraph, 1, 4));
+    }
+
+    @Test
+    void numberOfShortestPaths_sameNode() {
+        Graph<Integer, Integer> testGraph = new SimpleUndirectedAdjacencyListGraph<>();
+        testGraph.addAllNodes(Arrays.asList(1, 2, 3, 4));
+        testGraph.addEdge(1, 2, 2);
+        testGraph.addEdge(2, 4, 2);
+        testGraph.addEdge(1, 3, 1);
+        testGraph.addEdge(3, 4, 2);
+        testGraph.addEdge(1, 4, 5);
+        Assertions.assertEquals(1, NodeToNodeDistanceMetricCalculation.numberOfShortestPaths(testGraph, 1, 1));
     }
 }
