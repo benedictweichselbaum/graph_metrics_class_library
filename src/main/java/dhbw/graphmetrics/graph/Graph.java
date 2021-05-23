@@ -31,10 +31,10 @@ public interface Graph<N extends Comparable<N>, E> {
 
 	/**
 	 * Method that adds multiple
-	 * @param node
-	 * @return
+	 * @param nodes collection of nodes
+	 * @return updated graph
 	 */
-	Graph<N, E> addAllNodes(Collection<N> node);
+	Graph<N, E> addAllNodes(Collection<N> nodes);
 
 	/**
 	 * Method that adds edge between two nodes. Edge has a edge marking

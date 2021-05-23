@@ -16,6 +16,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Abstract class for an adjacency list graph. Holding all relevant methods that do not need to be
+ * overwritten by inheriting classes.
+ * @param <N> type of node
+ * @param <E> type of node marking
+ */
 @Getter
 @NoArgsConstructor
 public abstract class AdjacencyListGraph<N extends Comparable<N>, E> implements Graph<N, E> {

@@ -6,10 +6,14 @@ import dhbw.graphmetrics.graph.marker.DirectedGraph;
 import dhbw.graphmetrics.graph.marker.SimpleGraph;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+/**
+ * Class for constructing a simple directed adjacency list graph. Inherits methods from AdjacencyListGraph and implements
+ * the methods for edge operations according to the graphs properties.
+ * @param <N> type of node
+ * @param <E> type of edge marking
+ */
 @Getter
-@Setter
 @NoArgsConstructor
 public class SimpleDirectedAdjacencyListGraph<N extends Comparable<N>, E> extends AdjacencyListGraph<N, E> implements SimpleGraph, DirectedGraph {
 

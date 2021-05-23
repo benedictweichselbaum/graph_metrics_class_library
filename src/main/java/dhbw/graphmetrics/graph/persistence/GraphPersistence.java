@@ -27,6 +27,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Class offering methods for persisting the graph into a file and reading a persisted graph from a file
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GraphPersistence {
 
