@@ -17,11 +17,22 @@ import dhbw.graphmetrics.metrics.control.exceptions.MetricChoiceException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+/**
+ * Control class taking initial metric calculation requests and distributing the request to the calculation classes
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GraphMetricCalculationDistribution {
 
 	private static final String NOT_IMPLEMENTED_CHOICE_MESSAGE = "The chosen metric is not implemented";
 
+	/**
+	 * Method for distributing the graph metrics
+	 * @param graph graph to be analyzed
+	 * @param metric graph metric
+	 * @param <N> type of node
+	 * @param <E> type of edge marking
+	 * @return metric number
+	 */
 	public static <N extends Comparable<N>, E> Number distributeGraphMetricCalculation(Graph<N, E> graph, GraphMetric metric) {
 		switch (metric) {
 			case ORDER:
@@ -55,6 +66,15 @@ public final class GraphMetricCalculationDistribution {
 		}
 	}
 
+	/**
+	 * Method for distributing node metric requests
+	 * @param graph graph to be analyzed
+	 * @param node node in graph to be analyzed
+	 * @param metric node metric
+	 * @param <N> type of node
+	 * @param <E> type of edge marking
+	 * @return metric number
+	 */
 	public static <N extends Comparable<N>, E> Number distributeNodeMetricCalculation(Graph<N, E> graph, N node, NodeMetric metric) {
 		switch (metric) {
 			case DEGREE:
@@ -80,6 +100,16 @@ public final class GraphMetricCalculationDistribution {
 		}
 	}
 
+	/**
+	 * Method for distributing node to node metric requests
+	 * @param graph graph to be analyzed
+	 * @param node1 first node in graph
+	 * @param node2 second node in graph
+	 * @param metric node to node metric
+	 * @param <N> type of node
+	 * @param <E> type of edge marking
+	 * @return metric number
+	 */
 	public static <N extends Comparable<N>, E> Number distributeNodeToNodeMetricCalculation(Graph<N, E> graph, N node1, N node2, NodeToNodeMetric metric) {
 		switch (metric) {
 			case DISTANCE:

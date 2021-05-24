@@ -1,5 +1,8 @@
 package dhbw.graphmetrics.metrics;
 
+/**
+ * Enumeration holding the different node metrics
+ */
 public enum NodeMetric {
 	DEGREE,
 	OUT_DEGREE,

@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
+/**
+ * Class offering graph search algorithms
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SearchAlgorithms {
 
@@ -30,6 +33,7 @@ public final class SearchAlgorithms {
     public static <N extends Comparable<N>, E> List<N> depthFirstVisitingSearch(Graph<N, E> graph, N node) {
         List<N> visitedNodes = new ArrayList<>();
         visitedNodes.add(node);
+        // Deque = Stack
         Deque<N> searchDeque = new ArrayDeque<>();
         searchDeque.push(node);
         while (!searchDeque.isEmpty()) {
@@ -50,7 +54,8 @@ public final class SearchAlgorithms {
      * @param node start node
      * @param <N> type of node
      * @param <E> type edge marking
-     * @return tuple of list with shortest distances and number of shortest paths
+     * @return tuple of list with shortest distances and number of shortest paths between given node and all
+     * other nodes
      */
     public static <N extends Comparable<N>, E> Tuple<Map<N, Integer>, Map<N, Integer>>
                                                         advancedBreadthFirstSearch(Graph<N, E> graph, N node) {

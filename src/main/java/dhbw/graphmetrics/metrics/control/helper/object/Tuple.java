@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Generic tuple. Holding two objects
+ * @param <T> type of first object
+ * @param <U> type of second object
+ */
 @AllArgsConstructor
 @Getter
 @Setter

@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Generic solution holder.
+ * @param <T> type of solution
+ */
 @Getter
 @Setter
 @AllArgsConstructor

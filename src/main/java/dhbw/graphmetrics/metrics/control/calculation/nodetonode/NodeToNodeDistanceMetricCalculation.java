@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.stream.Collectors;
 
+/**
+ * Class providing methods for metrics regarding two nodes
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class NodeToNodeDistanceMetricCalculation {
 
@@ -35,20 +38,27 @@ public final class NodeToNodeDistanceMetricCalculation {
 
         List<N> visitedNodes = new ArrayList<>();
 
+        // init priority queue with tuples storing a node and its distance from the start node (from)
         PriorityQueue<Tuple<N, Integer>> frontier =
                 new PriorityQueue<>(graph.nodes().size(), Comparator.comparingInt(Tuple::getSecondObject));
         frontier.add(new Tuple<>(realFromNode, 0));
 
         while(!frontier.isEmpty()) {
+            // get first tuple from priority queue
             Tuple<N, Integer> nextTuple = frontier.poll();
+            // check if it is the goal node
             if (nextTuple.getFirstObject().compareTo(realToNode) == Graph.DEFAULT_COMPARE_TO_EQUALITY_VALUE) {
                 return nextTuple.getSecondObject();
             }
+            // mark node as visited
             visitedNodes.add(nextTuple.getFirstObject());
+            // add all adjacent nodes to the frontier
             frontier.addAll(graph.edgesFromNode(nextTuple.getFirstObject()).stream().filter(edge ->
                     !visitedNodes.contains(edge.getToNode())).map(edge ->
                     createFrontierTuple(edge, nextTuple, useEdgeMarking)).collect(Collectors.toSet()));
         }
+
+        // then goal not found return infinity
         return INFINITY;
     }
 
@@ -65,6 +75,17 @@ public final class NodeToNodeDistanceMetricCalculation {
         return SearchAlgorithms.advancedBreadthFirstSearch(graph, from).getSecondObject().get(to);
     }
 
+    /**
+     * Private method creating a new frontier tuple for the UCS. If edge marking is an integer
+     * the new calculated distance is based on the marking. Else the standard cost of 1 for an edge is used.
+     * @param edgeToTransform edge containing the information for the adjacent node
+     * @param baseTuple tuple on which the cost calculation
+     * @param edgeMarkingIsInteger boolean determining if the edge marking should be used (only usable if integer
+     *                             otherwise ClassCastException is thrown)
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return new frontier tuple
+     */
     private static <N extends Comparable<N>, E> Tuple<N, Integer> createFrontierTuple (Edge<N, E> edgeToTransform,
                                                                                        Tuple<N, Integer> baseTuple,
                                                                                        boolean edgeMarkingIsInteger) {

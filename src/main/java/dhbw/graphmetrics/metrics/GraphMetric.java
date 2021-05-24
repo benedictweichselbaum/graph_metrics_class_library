@@ -1,5 +1,8 @@
 package dhbw.graphmetrics.metrics;
 
+/**
+ * Enumeration holding the different graph metrics
+ */
 public enum GraphMetric {
 	ORDER,
 	SIZE,

@@ -11,18 +11,33 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Class offering the method for inverting a graph
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GraphNodeEdgeInverter {
 
+    /**
+     * Method inverting a graph. All edges become nodes and the new nodes get connected if the original edges
+     * were incident to each other.
+     * @param graph graph to be inverted
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return inverted graph
+     */
     public static <N extends Comparable<N>, E> Graph<Integer, Void> invertGraphForChromaticIndex(Graph<N, E> graph) {
         Set<Edge<N, E>> edges = new HashSet<>();
         Graph<Integer, Void> newGraph;
+
+        // determine all single edges
         for (Edge<N, E> edge : graph.edges()) {
             if (edgeSetDoesNotContainSimilarEdge(edges, edge)) {
                 edges.add(edge);
             }
         }
         newGraph = new SimpleUndirectedAdjacencyListGraph<>();
+
+        // add new nodes from edges into inverted graph
         int correspondingNodeNumber = 1;
         Map<Edge<N, E>, Integer> map = new HashMap<>();
         for (Edge<N, E> edge : edges) {
@@ -30,6 +45,8 @@ public final class GraphNodeEdgeInverter {
             newGraph.addNode(correspondingNodeNumber);
             correspondingNodeNumber++;
         }
+
+        // add edges into inverted graph
         for (Edge<N, E> edge1 : edges) {
             for (Edge<N, E> edge2 : edges) {
                 if (edgesAreIncidentToSameNode(edge1, edge2)) {
