@@ -13,6 +13,9 @@ import org.apache.commons.math3.linear.RealMatrix;
 
 import java.util.Map;
 
+/**
+ * Class providing methods for calculating centrality metrics
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CentralityMetricCalculation {
 
@@ -20,10 +23,26 @@ public final class CentralityMetricCalculation {
     public static final double MINIMUM_CONVERGING_DISTANCE = 0.001;
     public static final double MODERATION_FACTOR = 0.85;
 
+    /**
+     * Method that calculates the degree centrality of a node in a graph
+     * @param graph graph to be analyzed
+     * @param node node to be analyzed
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return degree centrality of node in graph
+     */
     public static <N extends Comparable<N>, E> Integer degreeCentrality(Graph<N, E> graph, N node) {
         return BasicNodeMetricCalculation.degree(graph, node);
     }
 
+    /**
+     * Method that calculates the closeness centrality of a node in a graph
+     * @param graph graph to be analyzed
+     * @param node node to be analyzed
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return closeness centrality of node in graph
+     */
     public static <N extends Comparable<N>, E> Double closenessCentrality(Graph<N, E> graph, N node) {
         int summedDistance = 0;
         for (Integer distance : SearchAlgorithms.advancedBreadthFirstSearch(graph, node).getFirstObject().values()) {
@@ -35,6 +54,14 @@ public final class CentralityMetricCalculation {
         return (BasicGraphMetricCalculation.order(graph) - 1.0) / summedDistance;
     }
 
+    /**
+     * Method that calculates the betweenness centrality of a node in a graph
+     * @param graph graph to be analyzed
+     * @param node node to be analyzed
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return betweenness centrality of node in graph
+     */
     public static <N extends Comparable<N>, E> Double betweennessCentrality(Graph<N, E> graph, N node) {
         double betweennessCentrality = 0.0;
         for (N s : graph.nodes()) {
@@ -48,6 +75,14 @@ public final class CentralityMetricCalculation {
         return betweennessCentrality;
     }
 
+    /**
+     * Method that calculates the eigenvector centrality of a node in a graph
+     * @param graph graph to be analyzed
+     * @param node node to be analyzed
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return eigenvector centrality of node in graph
+     */
     public static <N extends Comparable<N>, E> Double eigenvectorCentrality(Graph<N, E> graph, N node) {
         AdjacencyMatrix<N, E> adjacencyMatrix = graph.adjacencyMatrix();
         double[][] edgeOneAdjacencyMatrix = new double[adjacencyMatrix.getMatrix().length][adjacencyMatrix.getMatrix().length];
@@ -61,12 +96,29 @@ public final class CentralityMetricCalculation {
         return eigenvectorCentralityVector[adjacencyMatrix.getNodeIndexMap().get(node)][0];
     }
 
+    /**
+     * Method that calculates the page rank of a node in a graph
+     * @param graph graph to be analyzed
+     * @param node node to be analyzed
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return page rank of node in graph
+     */
     public static <N extends Comparable<N>, E> Double pageRank(Graph<N, E> graph, N node) {
         Map<N, Double> initialPageRankMap = MapHelper.fillMapWithDefaultValue(graph.nodes(),
                 1.0 / BasicGraphMetricCalculation.order(graph));
         return pageRankIteration(graph, MapHelper.cloneMap(initialPageRankMap), initialPageRankMap).get(node);
     }
 
+    /**
+     * Private method for the page rank iteration. Is a recursive method.
+     * @param graph graph to operate on
+     * @param previousPageRankMap page rank map from previous iteration
+     * @param pageRankMap current page rank map
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return map that maps a node to its page rank
+     */
     private static <N extends Comparable<N>, E> Map<N, Double> pageRankIteration(Graph<N, E> graph,
                                                                        Map<N, Double> previousPageRankMap,
                                                                        Map<N, Double> pageRankMap) {
@@ -87,11 +139,25 @@ public final class CentralityMetricCalculation {
         }
     }
 
+    /**
+     * Private method that checks if the page rank algorithm converges
+     * @param previousPageRankMap page rank map from previous iteration
+     * @param pageRankMap current page rank map
+     * @param <N> type of node
+     * @return true if page rank algorithm converges, false else
+     */
     private static <N> boolean pageRankConverges(Map<N, Double> previousPageRankMap, Map<N, Double> pageRankMap) {
         return pageRankMap.entrySet().stream().allMatch(entry -> Math.abs(pageRankMap.get(entry.getKey()) - previousPageRankMap.get(entry.getKey()))
                 <= MINIMUM_CONVERGING_DISTANCE);
     }
 
+    /**
+     * Private method for the recursive power iteration for the eigenvector centrality calculation
+     * @param adjacencyMatrix adjacency matrix of graph
+     * @param vector current vector with approximated eigenvector centrality of nodes
+     * @param previousNormalizedValue normalizing value from previous iteration
+     * @return vector with eigenvector centrality for each node
+     */
     private static double[][] powerIteration(RealMatrix adjacencyMatrix, RealMatrix vector, Double previousNormalizedValue) {
         RealMatrix newVector = adjacencyMatrix.multiply(vector);
         double normalizedValue = normalizedVectorValue(newVector);
@@ -105,11 +171,22 @@ public final class CentralityMetricCalculation {
         }
     }
 
+    /**
+     * Private method checking if power iteration converged
+     * @param previousNormalizedValue normalized vector value from previous iteration
+     * @param normalizedValue normalized vector value from current iteration
+     * @return true if power iteration converged, false else
+     */
     private static boolean powerIterationConverged(Double previousNormalizedValue, Double normalizedValue) {
         if (previousNormalizedValue == null) return false;
         else return (Math.abs(previousNormalizedValue - normalizedValue) <= MINIMUM_CONVERGING_DISTANCE);
     }
 
+    /**
+     * Private method calculating the normalized vector value of a column vector
+     * @param vector column vector
+     * @return normalized value
+     */
     private static double normalizedVectorValue(RealMatrix vector) {
         double sum = 0.0;
         for (double vectorEntry : vector.getColumn(0)) {
@@ -118,6 +195,11 @@ public final class CentralityMetricCalculation {
         return Math.sqrt(sum);
     }
 
+    /**
+     * Private method creating the needed starting vector for the power iteration filled with 1.
+     * @param numberOfRows length of the column vector. As long as the number of nodes in the graph
+     * @return start vector for the power iteration
+     */
     private static RealMatrix createStartVector(int numberOfRows) {
         double[][] vector = new double[numberOfRows][1];
         for(int i = 0; i < numberOfRows; i++) {
@@ -126,6 +208,17 @@ public final class CentralityMetricCalculation {
         return new Array2DRowRealMatrix(vector);
     }
 
+    /**
+     * Private method calculating the number of shortest paths through a node.
+     * Uses algorithm that is described in the student research project.
+     * @param graph graph to be analyzed
+     * @param fromNode starting node of paths
+     * @param toNode end node of paths
+     * @param throughNode node through which all paths should go
+     * @param <N> type of node
+     * @param <E> type of edge marking
+     * @return number of shortest paths through node
+     */
     private static <N extends Comparable<N>, E> Integer numberOfShortestPathsThroughNode(Graph<N, E> graph,
                                                                                          N fromNode, N toNode,
                                                                                          N throughNode) {
@@ -138,6 +231,4 @@ public final class CentralityMetricCalculation {
                     NodeToNodeDistanceMetricCalculation.numberOfShortestPaths(graph, throughNode, toNode);
         }
     }
-
-
 }
