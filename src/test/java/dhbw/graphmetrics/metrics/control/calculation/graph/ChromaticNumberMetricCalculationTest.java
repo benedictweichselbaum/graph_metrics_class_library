@@ -25,7 +25,7 @@ class ChromaticNumberMetricCalculationTest extends AbstractTest {
     @Test
     void chromaticNumberExact_emptyGraph() {
         Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(0);
-        Assertions.assertEquals(0, ChromaticNumberMetricCalculation.chromaticNumberExact(graph));
+        Assertions.assertEquals(1, ChromaticNumberMetricCalculation.chromaticNumberExact(graph));
     }
 
     @Test
@@ -49,7 +49,7 @@ class ChromaticNumberMetricCalculationTest extends AbstractTest {
     @Test
     void chromaticNumberGreedy_emptyGraph() {
         Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(0);
-        Assertions.assertEquals(0, ChromaticNumberMetricCalculation.chromaticNumberGreedy(graph));
+        Assertions.assertEquals(1, ChromaticNumberMetricCalculation.chromaticNumberGreedy(graph));
     }
 
     @Test
