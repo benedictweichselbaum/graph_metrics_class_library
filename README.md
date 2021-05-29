@@ -2,6 +2,14 @@
 Dieses Repository beinhaltet eine Klassenbibliothek zur Erstellung von Graphen und zur Berechnung von Graphmetriken (Graph-Kennzahlen).
 
 Die Klassenbilbiothek ist im Rahmen einer Studienarbeit der DBHW Stuttgart Campus Horb entstanden.
+
+Thema: <b>Untersuchung und Umsetzung von Graphmetriken</b>
+
+Angaben zu mir:
+
+Benedict Weichselbaum<br/>
+Informatik-Student Semester 6<br/>
+DHBW Stuttgart Campus Horb
 ## Technologie
 Das gewählte Build-Tool ist Maven und die Bibliothek wurde mittels der Sprache Java umgesetzt
 ## Funktionen
