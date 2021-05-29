@@ -7,6 +7,10 @@ Das gewählte Build-Tool ist Maven und die Bibliothek wurde mittels der Sprache 
 ## Funktionen
 * Bereitstellung einer Graph-Interfaces und bestimmte Graph-Implementierungen
 * Bereitstellung einer Schnittstelle zur Berechnung diverser Metriken für Graph, Knoten in Graph und Knoten zu Knoten
+## Voraussetzungen
+Um die Bibliothek verwenden zu können, müssen folgende Prämissen gegeben sein:
+* Installiertes Java Development Kit (mit Java Runtime Enviroment) der Version 13 oder höher (OpenJDK empfohlen)
+* Maven installiert <https://maven.apache.org/>
 ## Verwendung
 1. Klonen Sie die Bibliothek mit Git in einen lokalen Ordner
 2. Bauen Sie das JAR für die Bibliothek mit
