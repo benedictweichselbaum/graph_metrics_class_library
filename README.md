@@ -7,3 +7,21 @@ Das gewählte Build-Tool ist Maven und die Bibliothek wurde mittels der Sprache 
 ## Funktionen
 * Bereitstellung einer Graph-Interfaces und bestimmte Graph-Implementierungen
 * Bereitstellung einer Schnittstelle zur Berechnung diverser Metriken für Graph, Knoten in Graph und Knoten zu Knoten
+## Verwendung
+1. Klonen Sie die Bibliothek mit Git in einen lokalen Ordner
+2. Bauen Sie das JAR für die Bibliothek mit
+```
+mvn clean install
+```
+3. Legen Sie die JAR, die nun im entstandenden "target"-Ordner liegt, in einen Ornder Ihrer Wahl.
+4. In einem neuen Java-Maven-Projekt kann die Bibliothek als folgende Dependency eingebaut werden:
+```xml
+<dependency>
+  <groupId>dhbw.weichselbaum</groupId>
+  <artifactId>graph_metrics_class_library</artifactId>
+  <version>1.0</version>
+  <scope>system</scope>
+  <systemPath>'Pfad-zur-JAR'/graph_metrics_class_library-1.0.jar</systemPath>
+</dependency>
+```
+5. Die Bibliothek kann nun im Projekt verwendet werden.
