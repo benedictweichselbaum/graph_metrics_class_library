@@ -45,8 +45,8 @@ class CentralityMetricCalculationTest extends AbstractTest {
         lineGraph.addEdge(3, 4, 1);
         lineGraph.addEdge(3, 5, 1);
         lineGraph.addEdge(5, 6, 1);
-        Assertions.assertEquals(42, CentralityMetricCalculation.betweennessCentrality(lineGraph, 3));
-        Assertions.assertEquals(20, CentralityMetricCalculation.betweennessCentrality(lineGraph, 5));
+        Assertions.assertEquals(16, CentralityMetricCalculation.betweennessCentrality(lineGraph, 3));
+        Assertions.assertEquals(8, CentralityMetricCalculation.betweennessCentrality(lineGraph, 5));
         Assertions.assertEquals(0, CentralityMetricCalculation.betweennessCentrality(lineGraph, 1));
     }
 

@@ -37,6 +37,6 @@ class SearchAlgorithmsTest extends AbstractTest {
         Assertions.assertEquals(2, solution.getFirstObject().get(4));
         Assertions.assertEquals(2, solution.getSecondObject().get(4));
         Assertions.assertEquals(1, solution.getFirstObject().get(3));
-        Assertions.assertEquals(2, solution.getSecondObject().get(3));
+        Assertions.assertEquals(1, solution.getSecondObject().get(3));
     }
 }

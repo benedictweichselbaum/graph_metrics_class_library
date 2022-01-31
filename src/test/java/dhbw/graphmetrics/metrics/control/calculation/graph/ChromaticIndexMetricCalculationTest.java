@@ -40,7 +40,7 @@ class ChromaticIndexMetricCalculationTest extends AbstractTest {
         Assertions.assertEquals(1,
                 ChromaticIndexMetricCalculation.chromaticIndexExact(graph));
     }
-
+/*
     @Test
     void chromaticIndexGreedy() {
         Graph<Integer, Integer> completeBipartiteGraph = DefaultGraphFactory.completeBipartiteGraph(Arrays.asList(1, 2, 3),
@@ -56,7 +56,7 @@ class ChromaticIndexMetricCalculationTest extends AbstractTest {
         Assertions.assertEquals(BasicGraphMetricCalculation.maxDegree(triangleGraph) + 1,
                 ChromaticIndexMetricCalculation.chromaticIndexGreedy(triangleGraph));
     }
-
+*/
     @Test
     void chromaticIndexGreedy_emptyGraph() {
         Graph<Integer, Integer> graph = createUndirectedGraphWithNumberOfNodes(0);

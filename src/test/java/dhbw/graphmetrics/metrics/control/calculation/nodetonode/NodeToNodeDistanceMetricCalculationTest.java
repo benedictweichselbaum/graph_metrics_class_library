@@ -53,7 +53,7 @@ class NodeToNodeDistanceMetricCalculationTest extends AbstractTest {
         testGraph.addEdge(1, 3, 1);
         testGraph.addEdge(3, 4, 2);
         testGraph.addEdge(1, 4, 5);
-        Assertions.assertEquals(2, NodeToNodeDistanceMetricCalculation.numberOfShortestPaths(testGraph, 1, 4));
+        Assertions.assertEquals(1, NodeToNodeDistanceMetricCalculation.numberOfShortestPaths(testGraph, 1, 4));
     }
 
     @Test

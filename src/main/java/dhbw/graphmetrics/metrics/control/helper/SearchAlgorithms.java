@@ -66,6 +66,7 @@ public final class SearchAlgorithms {
         Queue<N> searchQueue = new LinkedList<>();
         searchQueue.add(node);
         List<N> visitedNodes = new ArrayList<>();
+        visitedNodes.add(node);
         while (!searchQueue.isEmpty()) {
             N actNode = searchQueue.poll();
             for (N childNode : graph.adjacentNodes(actNode)) {
