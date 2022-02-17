@@ -89,6 +89,8 @@ public final class GraphMetricCalculationDistribution {
 				return CentralityMetricCalculation.degreeCentrality(graph, node);
 			case CLOSENESS_CENTRALITY:
 				return CentralityMetricCalculation.closenessCentrality(graph, node);
+			case CLOSENESS_CENTRALITY_DISCONNECTED:
+				return CentralityMetricCalculation.closenessCentralityDisconnected(graph, node);
 			case BETWEENNESS_CENTRALITY:
 				return CentralityMetricCalculation.betweennessCentrality(graph, node);
 			case EIGENVECTOR_CENTRALITY:

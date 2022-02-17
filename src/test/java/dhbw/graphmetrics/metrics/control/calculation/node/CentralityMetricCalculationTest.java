@@ -37,6 +37,21 @@ class CentralityMetricCalculationTest extends AbstractTest {
     }
 
     @Test
+    void closenessCentralityDisconnected() {
+        Graph<Integer, Integer> lineGraph = new SimpleUndirectedAdjacencyListGraph<>();
+        lineGraph.addAllNodes(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8));
+        lineGraph.addEdge(1, 2, 1);
+        lineGraph.addEdge(2, 3, 1);
+        lineGraph.addEdge(3, 4, 1);
+        lineGraph.addEdge(4, 5, 1);
+        lineGraph.addEdge(6, 7, 1);
+        Assertions.assertEquals(0.0544, CentralityMetricCalculation.closenessCentralityDisconnected(lineGraph, 3), 0.0001);
+        Assertions.assertEquals(0.0327, CentralityMetricCalculation.closenessCentralityDisconnected(lineGraph, 5), 0.0001);
+        Assertions.assertEquals(0.0204, CentralityMetricCalculation.closenessCentralityDisconnected(lineGraph, 7), 0.0001);
+        Assertions.assertEquals(0.0, CentralityMetricCalculation.closenessCentralityDisconnected(lineGraph, 8), 0.0001);
+    }
+
+    @Test
     void betweennessCentrality() {
         Graph<Integer, Integer> lineGraph = new SimpleUndirectedAdjacencyListGraph<>();
         lineGraph.addAllNodes(Arrays.asList(1, 2, 3, 4, 5, 6));
