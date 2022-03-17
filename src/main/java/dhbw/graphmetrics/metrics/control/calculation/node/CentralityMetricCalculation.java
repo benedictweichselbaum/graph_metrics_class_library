@@ -92,8 +92,11 @@ public final class CentralityMetricCalculation {
         for (N s : graph.nodes()) {
             for (N t : graph.nodes()) {
                 if (!s.equals(t) && !s.equals(node) && !t.equals(node)) {
-                    betweennessCentrality += (numberOfShortestPathsThroughNode(graph, s, t, node) * 1.0) /
-                            NodeToNodeDistanceMetricCalculation.numberOfShortestPaths(graph, s, t);
+                    int numberShortestPaths = NodeToNodeDistanceMetricCalculation.numberOfShortestPaths(graph, s, t);
+                    if (numberShortestPaths > 0) {
+                        betweennessCentrality += (numberOfShortestPathsThroughNode(graph, s, t, node) * 1.0) /
+                                numberShortestPaths;
+                    }
                 }
             }
         }
@@ -119,7 +122,8 @@ public final class CentralityMetricCalculation {
         }
         double[][] eigenvectorCentralityVector = powerIteration(new Array2DRowRealMatrix(edgeOneAdjacencyMatrix),
                 createStartVector(edgeOneAdjacencyMatrix.length), null);
-        return eigenvectorCentralityVector[adjacencyMatrix.getNodeIndexMap().get(node)][0];
+        var res =  eigenvectorCentralityVector[adjacencyMatrix.getNodeIndexMap().get(node)][0];
+        return Double.isNaN(res) ? 0.0 : res;
     }
 
     /**
@@ -210,6 +214,7 @@ public final class CentralityMetricCalculation {
      */
     private static boolean powerIterationConverged(Double previousNormalizedValue, Double normalizedValue) {
         if (previousNormalizedValue == null) return false;
+        if (Double.isNaN(normalizedValue) || Double.isNaN(previousNormalizedValue)) return true;
         else return (Math.abs(previousNormalizedValue - normalizedValue) <= MINIMUM_CONVERGING_DISTANCE);
     }
 
