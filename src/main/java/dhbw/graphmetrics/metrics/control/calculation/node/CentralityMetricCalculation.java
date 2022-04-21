@@ -121,7 +121,30 @@ public final class CentralityMetricCalculation {
             }
         }
         double[][] eigenvectorCentralityVector = powerIteration(new Array2DRowRealMatrix(edgeOneAdjacencyMatrix),
-                createStartVector(edgeOneAdjacencyMatrix.length), null);
+                createStartVector(edgeOneAdjacencyMatrix.length), null, false);
+        var res =  eigenvectorCentralityVector[adjacencyMatrix.getNodeIndexMap().get(node)][0];
+        return Double.isNaN(res) ? 0.0 : res;
+    }
+
+    /**
+     * Method that calculates the eigenvector centrality of a node in a graph and returns the normalized value
+     *
+     * @param graph graph to be analyzed
+     * @param node  node to be analyzed
+     * @param <N>   type of node
+     * @param <E>   type of edge marking
+     * @return eigenvector centrality of node in graph
+     */
+    public static <N extends Comparable<N>, E> Double eigenvectorCentralityNormalized(Graph<N, E> graph, N node) {
+        AdjacencyMatrix<N, E> adjacencyMatrix = graph.adjacencyMatrix();
+        double[][] edgeOneAdjacencyMatrix = new double[adjacencyMatrix.getMatrix().length][adjacencyMatrix.getMatrix().length];
+        for (int i = 0; i < adjacencyMatrix.getMatrix().length; i++) {
+            for (int j = 0; j < adjacencyMatrix.getMatrix().length; j++) {
+                edgeOneAdjacencyMatrix[i][j] = adjacencyMatrix.getMatrix()[i][j] == null ? 0 : 1;
+            }
+        }
+        double[][] eigenvectorCentralityVector = powerIteration(new Array2DRowRealMatrix(edgeOneAdjacencyMatrix),
+                createStartVector(edgeOneAdjacencyMatrix.length), null, true);
         var res =  eigenvectorCentralityVector[adjacencyMatrix.getNodeIndexMap().get(node)][0];
         return Double.isNaN(res) ? 0.0 : res;
     }
@@ -192,16 +215,26 @@ public final class CentralityMetricCalculation {
      * @param previousNormalizedValue normalizing value from previous iteration
      * @return vector with eigenvector centrality for each node
      */
-    private static double[][] powerIteration(RealMatrix adjacencyMatrix, RealMatrix vector, Double previousNormalizedValue) {
+    private static double[][] powerIteration(RealMatrix adjacencyMatrix, RealMatrix vector, Double previousNormalizedValue,
+                                             boolean normalize) {
         RealMatrix newVector = adjacencyMatrix.multiply(vector);
         double normalizedValue = normalizedVectorValue(newVector);
         for (int entryIndex = 0; entryIndex < newVector.getRowDimension(); entryIndex++) {
             newVector.setEntry(entryIndex, 0, newVector.getEntry(entryIndex, 0) / normalizedValue);
         }
         if (powerIterationConverged(previousNormalizedValue, normalizedValue)) {
+            if (normalize) {
+                double normalizedValueT = 0.0;
+                for (int i = 0; i < newVector.getRowDimension(); i++) {
+                    normalizedValueT += newVector.getEntry(i,0);
+                }
+                for (int i = 0; i < newVector.getRowDimension(); i++) {
+                    newVector.setEntry(i, 0, newVector.getEntry(i, 0) / normalizedValueT);
+                }
+            }
             return newVector.getData();
         } else {
-            return powerIteration(adjacencyMatrix, newVector, normalizedValue);
+            return powerIteration(adjacencyMatrix, newVector, normalizedValue, normalize);
         }
     }
 
